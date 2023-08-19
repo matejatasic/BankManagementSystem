@@ -4,6 +4,7 @@
 #include "repositories/transaction-repository.h"
 #include "services/validation-service.h"
 #include "services/bank-service.h"
+#include "services/hash-service.h"
 
 using namespace std;
 
@@ -29,14 +30,14 @@ int main()
     cin >> pin;
     cout << "\n";
 
-    hash<string> string_hash;
-    int hashed_pin = string_hash(pin);
+    shared_ptr<HashService> hash_service = make_shared<HashService>();
+    string hashed_pin = to_string(hash_service->hash(pin));
 
     shared_ptr<Account> account = make_shared<Account>();
     shared_ptr<AccountRepository> account_repository = make_shared<AccountRepository>(account);
 
     ValidationService validation_service(account_repository);
-    validation_service.validate_credentials(name, to_string(hashed_pin));
+    validation_service.validate_credentials(name, hashed_pin);
 
     if (validation_service.get_error_message().length() > 0) {
         cout << validation_service.get_error_message() << endl;
