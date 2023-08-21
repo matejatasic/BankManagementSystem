@@ -90,7 +90,7 @@ shared_ptr<Account> AccountRepository::find_by_owner(string name) {
     return this->account;
 }
 
-void AccountRepository::update_balance(double balance_change, int account_id) {
+void AccountRepository::update_balance(double balance_change) {
     string operation = balance_change < 0 ? "" : "+";
     string balance_change_str = operation + " " + to_string(balance_change);
     const string query = "UPDATE " + this->table_name +" SET balance = balance " + balance_change_str + " WHERE id=?";
@@ -101,7 +101,27 @@ void AccountRepository::update_balance(double balance_change, int account_id) {
         throw exception();
     }
 
-    sqlite3_bind_int(this->stmt, 1, account_id);
+    sqlite3_bind_int(this->stmt, 1, this->account->get_id());
+
+    this->result = sqlite3_step(this->stmt);
+    sqlite3_finalize(this->stmt);
+
+    if (this->result != SQLITE_DONE) {
+        throw UpdateException();
+    }
+}
+
+void AccountRepository::update_pin(string pin) {
+    const string query = "UPDATE " + this->table_name +" SET pin=? WHERE id=?";
+
+    this->result = sqlite3_prepare(this->db, query.c_str(), query.length(), &this->stmt, NULL);
+
+    if (this->result != SQLITE_OK) {
+        throw exception();
+    }
+
+    sqlite3_bind_text(this->stmt, 1, pin.c_str(), pin.length(), NULL);
+    sqlite3_bind_int(this->stmt, 2, this->account->get_id());
 
     this->result = sqlite3_step(this->stmt);
     sqlite3_finalize(this->stmt);

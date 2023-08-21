@@ -9,12 +9,14 @@ BankService::BankService(
     shared_ptr<AccountRepository> account_repository,
     shared_ptr<TransactionRepository> transaction_repository,
     shared_ptr<Account> account,
-    shared_ptr<Transaction> transaction
+    shared_ptr<Transaction> transaction,
+    shared_ptr<HashService> hash_service
 ) {
     this->account_repository = account_repository;
     this->transaction_repository = transaction_repository;
     this->account = account;
     this->transaction = transaction;
+    this->hash_service = hash_service;
 }
 
 void BankService::run_app() {
@@ -41,6 +43,9 @@ void BankService::run_app() {
             case this->CHOICE_TRANSACTION:
                 this->show_transaction_details();
                 break;
+            case this->CHOICE_CHANGE_PIN:
+                this->change_pin();
+                break;
             case this->CHOICE_EXIT:
                 exit(0);
                 break;
@@ -54,11 +59,12 @@ void BankService::show_menu() {
     cout << "\nMENU\n";
     cout << "---------\n";
 
-    cout << "\n1: Account Details";
-    cout << "\n2: Deposit Money";
-    cout << "\n3: Withdraw Money";
-    cout << "\n4: Transaction Details";
-    cout << "\n5: Exit\n";
+    cout << "\n" << this->CHOICE_ACCOUNT_DETAILS << ": Account Details";
+    cout << "\n" << this->CHOICE_DEPOSIT << ": Deposit Money";
+    cout << "\n" << this->CHOICE_WITHDRAW << ": Withdraw Money";
+    cout << "\n" << this->CHOICE_TRANSACTION << ": Transaction Details";
+    cout << "\n" << this->CHOICE_CHANGE_PIN << ": Change Pin";
+    cout << "\n" << this->CHOICE_EXIT << ": Exit\n";
 }
 
 void BankService::show_account_details() {
@@ -87,12 +93,13 @@ void BankService::deposit_money() {
     amount = floor(amount * 100.0) / 100.0;
 
     try {
-        this->account_repository->update_balance(amount, this->account->get_id());
+        this->account_repository->update_balance(amount);
         this->transaction->Init(amount, account->get_id(), "deposit");
         this->transaction_repository->create(*this->transaction);
         this->account->set_balance(this->account->get_balance() + amount);
 
-        cout << "Successfully deposited\n";
+        cout << "\n";
+        cout << "Successfully deposited" << endl;
     }
     catch(CreateException) {
         cout << "There was a problem while creating the transaction\n";
@@ -127,12 +134,13 @@ void BankService::withdraw_money() {
     }
 
     try {
-        this->account_repository->update_balance(-amount, this->account->get_id());
+        this->account_repository->update_balance(-amount);
         this->transaction->Init(-amount, this->account->get_id(), "withdraw");
         this->transaction_repository->create(*this->transaction);
         this->account->set_balance(this->account->get_balance() - amount);
 
-        cout << "Successfully withdrawn\n";
+        cout << "\n";
+        cout << "Successfully withdrawn" << endl;
     }
     catch(CreateException) {
         cout << "There was a problem while creating the transaction\n";
@@ -172,6 +180,50 @@ void BankService::show_transaction_details() {
     catch(exception) {
         cout << "There was a problem while fetching transactions\n";
     }
+}
+
+void BankService::change_pin() {
+    cout << "\nChange pin\n";
+    cout << "-----------\n\n";
+
+    string old_pin;
+    string new_pin;
+
+    cout << "Enter your old pin: ";
+    cin >> old_pin;
+
+    cout << "Enter you new pin: ";
+    cin >> new_pin;
+
+    old_pin = to_string(this->hash_service->hash(old_pin));
+
+    if(old_pin != this->account->get_pin()) {
+        cout << "\n";
+        cout << "Old pin is not valid" << endl;
+
+        this->show_press_any_key();
+
+        return;
+    }
+
+    try {
+        new_pin = to_string(this->hash_service->hash(new_pin));
+
+        this->account_repository->update_pin(new_pin);
+
+        this->account->set_pin(new_pin);
+
+        cout << "\n";
+        cout << "Successfully changed the pin" << endl;
+    }
+    catch(UpdateException) {
+        cout << "There was a problem while updating the pin\n";
+    }
+    catch(exception) {
+        cout << "There was a problem while changing the pin" << endl;
+    }
+
+    this->show_press_any_key();
 }
 
 void BankService::show_press_any_key() {

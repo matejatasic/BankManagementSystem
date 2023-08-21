@@ -30,4 +30,5 @@ class Account {
         double get_balance();
 
         Account* set_balance(double balance);
+        Account* set_pin(std::string pin);
 };

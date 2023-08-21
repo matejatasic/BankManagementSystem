@@ -16,5 +16,6 @@ class  AccountRepository {
         AccountRepository(std::shared_ptr<Account> account);
         ~AccountRepository();
         std::shared_ptr<Account> find_by_owner(std::string name);
-        void update_balance(double balance_change, int account_id);
+        void update_balance(double balance_change);
+        void update_pin(std::string pin);
 };

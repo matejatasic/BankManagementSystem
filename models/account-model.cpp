@@ -54,3 +54,9 @@ Account* Account::set_balance(double balance) {
 
     return this;
 }
+
+Account* Account::set_pin(string pin) {
+    this->pin = pin;
+
+    return this;
+}

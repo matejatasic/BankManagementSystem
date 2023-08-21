@@ -49,7 +49,7 @@ int main()
     account = validation_service.get_account();
     shared_ptr<Transaction> transaction = make_shared<Transaction>();
 
-    BankService bank_service(account_repository, transaction_repository, account, transaction);
+    BankService bank_service(account_repository, transaction_repository, account, transaction, hash_service);
     bank_service.run_app();
 
     return 0;
