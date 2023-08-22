@@ -130,3 +130,29 @@ void AccountRepository::update_pin(string pin) {
         throw UpdateException();
     }
 }
+
+void AccountRepository::update_personal_details(
+    std::string owner,
+    std::string phone,
+    std::string email
+) {
+    const string query = "UPDATE " + this->table_name +" SET owner=?, phone=?, email=? WHERE id=?";
+
+    this->result = sqlite3_prepare(this->db, query.c_str(), query.length(), &this->stmt, NULL);
+
+    if (this->result != SQLITE_OK) {
+        throw exception();
+    }
+
+    sqlite3_bind_text(this->stmt, 1, owner.c_str(), owner.length(), NULL);
+    sqlite3_bind_text(this->stmt, 2, phone.c_str(), phone.length(), NULL);
+    sqlite3_bind_text(this->stmt, 3, email.c_str(), email.length(), NULL);
+    sqlite3_bind_int(this->stmt, 4, this->account->get_id());
+
+    this->result = sqlite3_step(this->stmt);
+    sqlite3_finalize(this->stmt);
+
+    if (this->result != SQLITE_DONE) {
+        throw UpdateException();
+    }
+}

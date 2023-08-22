@@ -18,4 +18,9 @@ class  AccountRepository {
         std::shared_ptr<Account> find_by_owner(std::string name);
         void update_balance(double balance_change);
         void update_pin(std::string pin);
+        void update_personal_details(
+            std::string owner,
+            std::string phone,
+            std::string email
+        );
 };

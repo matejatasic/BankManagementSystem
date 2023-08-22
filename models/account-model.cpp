@@ -45,12 +45,8 @@ string Account::get_registration_date() {
     return this->registration_date;
 }
 
-double Account::get_balance() {
-    return this->balance;
-}
-
-Account* Account::set_balance(double balance) {
-    this->balance = balance;
+Account* Account::set_owner(string owner) {
+    this->owner = owner;
 
     return this;
 }
@@ -59,4 +55,26 @@ Account* Account::set_pin(string pin) {
     this->pin = pin;
 
     return this;
+}
+
+Account* Account::set_balance(double balance) {
+    this->balance = balance;
+
+    return this;
+}
+
+Account* Account::set_phone(std::string phone) {
+    this->phone = phone;
+
+    return this;
+}
+
+Account* Account::set_email(std::string email) {
+    this->email = email;
+
+    return this;
+}
+
+double Account::get_balance() {
+    return this->balance;
 }

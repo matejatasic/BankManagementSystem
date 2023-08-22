@@ -8,13 +8,6 @@
 
 using namespace std;
 
-const int VALIDATION_VALID = 0;
-const int VALIDATION_INVALID_NAME = 1;
-const int VALIDATION_INVALID_PIN = 2;
-const int VALIDATION_DATABASE_NOT_EXISTS_ERROR = 3;
-const int VALIDATION_TABLE_NOT_EXISTS_ERROR = 4;
-const int VALIDATION_DEFAULT_DATABASE_ERROR = 5;
-
 int main()
 {
     string name;

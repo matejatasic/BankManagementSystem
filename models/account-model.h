@@ -29,6 +29,9 @@ class Account {
         std::string get_registration_date();
         double get_balance();
 
-        Account* set_balance(double balance);
+        Account* set_owner(std::string owner);
         Account* set_pin(std::string pin);
+        Account* set_phone(std::string phone);
+        Account* set_email(std::string email);
+        Account* set_balance(double balance);
 };

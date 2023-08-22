@@ -46,6 +46,9 @@ void BankService::run_app() {
             case this->CHOICE_CHANGE_PIN:
                 this->change_pin();
                 break;
+            case this->CHOICE_CHANGE_PERSONAL_DETAILS:
+                this->change_personal_details();
+                break;
             case this->CHOICE_EXIT:
                 exit(0);
                 break;
@@ -64,6 +67,7 @@ void BankService::show_menu() {
     cout << "\n" << this->CHOICE_WITHDRAW << ": Withdraw Money";
     cout << "\n" << this->CHOICE_TRANSACTION << ": Transaction Details";
     cout << "\n" << this->CHOICE_CHANGE_PIN << ": Change Pin";
+    cout << "\n" << this->CHOICE_CHANGE_PERSONAL_DETAILS << ": Change Personal Details";
     cout << "\n" << this->CHOICE_EXIT << ": Exit\n";
 }
 
@@ -221,6 +225,43 @@ void BankService::change_pin() {
     }
     catch(exception) {
         cout << "There was a problem while changing the pin" << endl;
+    }
+
+    this->show_press_any_key();
+}
+
+void BankService::change_personal_details() {
+    cout << "\nChange personal details\n";
+    cout << "-------------------\n\n";
+
+    string name;
+    string phone;
+    string email;
+
+    cout << "Type in your name: ";
+    cin >> name;
+
+    cout << "Type in your phone: ";
+    cin >> phone;
+
+    cout << "Type in your email: ";
+    cin >> email;
+
+    try {
+        this->account_repository->update_personal_details(name, phone, email);
+
+        this->account->set_owner(name);
+        this->account->set_phone(phone);
+        this->account->set_email(email);
+
+        cout << "\n";
+        cout << "Successfully changed the personal details" << endl;
+    }
+    catch(UpdateException) {
+        cout << "\nThere was a problem while updating the personal details\n";
+    }
+    catch(exception) {
+        cout << "\nThere was a problem while changing the personal details" << endl;
     }
 
     this->show_press_any_key();
