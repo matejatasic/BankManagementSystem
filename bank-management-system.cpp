@@ -2,6 +2,7 @@
 #include <string>
 #include <memory>
 #include "repositories/transaction-repository.h"
+#include "controllers/bank-controller.h"
 #include "services/validation-service.h"
 #include "services/bank-service.h"
 #include "services/hash-service.h"
@@ -42,8 +43,9 @@ int main()
     account = validation_service.get_account();
     shared_ptr<Transaction> transaction = make_shared<Transaction>();
 
-    BankService bank_service(account_repository, transaction_repository, account, transaction, hash_service);
-    bank_service.run_app();
+    shared_ptr<BankService> bank_service = make_shared<BankService>(account_repository, transaction_repository, account, transaction, hash_service);
+    BankController bank_controller(bank_service);
+    bank_controller.run_app();
 
     return 0;
 }
