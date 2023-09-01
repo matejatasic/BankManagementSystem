@@ -1,11 +1,11 @@
 #include <iostream>
 #include <cmath>
-#include "bank-service.h"
+#include "customer-service.h"
 #include "../errors/errors.h"
 
 using namespace std;
 
-BankService::BankService(
+CustomerService::CustomerService(
     shared_ptr<AccountRepository> account_repository,
     shared_ptr<TransactionRepository> transaction_repository,
     shared_ptr<Account> account,
@@ -19,7 +19,7 @@ BankService::BankService(
     this->hash_service = hash_service;
 }
 
-string BankService::show_account_details() {
+string CustomerService::show_account_details() {
     cout << "\nAcount Details\n";
     cout << "--------------\n\n";
 
@@ -31,7 +31,7 @@ string BankService::show_account_details() {
     + "Balance: " + to_string(this->account->get_balance()) + "\n";
 }
 
-string BankService::deposit_money(double amount) {
+string CustomerService::deposit_money(double amount) {
     try {
         this->account_repository->update_balance(amount);
         this->transaction->Init(amount, account->get_id(), "deposit");
@@ -51,7 +51,7 @@ string BankService::deposit_money(double amount) {
     }
 }
 
-string BankService::withdraw_money(double amount) {
+string CustomerService::withdraw_money(double amount) {
     if (amount > this->account->get_balance()) {
         return "Not enough money on the account";
     }
@@ -75,7 +75,7 @@ string BankService::withdraw_money(double amount) {
     }
 }
 
-string BankService::show_transaction_details() {
+string CustomerService::show_transaction_details() {
     try {
         vector<Transaction> transactions = this->transaction_repository->find_by_account_id(account->get_id());
 
@@ -98,7 +98,7 @@ string BankService::show_transaction_details() {
     }
 }
 
-string BankService::change_pin(string old_pin, string new_pin) {
+string CustomerService::change_pin(string old_pin, string new_pin) {
     old_pin = to_string(this->hash_service->hash(old_pin));
 
     if(old_pin != this->account->get_pin()) {
@@ -122,7 +122,7 @@ string BankService::change_pin(string old_pin, string new_pin) {
     }
 }
 
-string BankService::change_personal_details(
+string CustomerService::change_personal_details(
     string name,
     string phone,
     string email

@@ -3,15 +3,7 @@
 #include "../repositories/transaction-repository.h"
 #include "../services/hash-service.h"
 
-class BankService {
-    static const int CHOICE_ACCOUNT_DETAILS = 1;
-    static const int CHOICE_DEPOSIT = 2;
-    static const int CHOICE_WITHDRAW = 3;
-    static const int CHOICE_TRANSACTION = 4;
-    static const int CHOICE_CHANGE_PIN = 5;
-    static const int CHOICE_CHANGE_PERSONAL_DETAILS = 6;
-    static const int CHOICE_EXIT = 7;
-
+class CustomerService {
     private:
         std::shared_ptr<AccountRepository> account_repository;
         std::shared_ptr<TransactionRepository> transaction_repository;
@@ -29,7 +21,7 @@ class BankService {
             std::string phone,
             std::string email
         );
-        BankService(
+        CustomerService(
             std::shared_ptr<AccountRepository> account_repository,
             std::shared_ptr<TransactionRepository> transaction_repository,
             std::shared_ptr<Account> account,

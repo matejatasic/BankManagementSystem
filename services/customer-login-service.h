@@ -1,8 +1,8 @@
-#include <string>
 #include <memory>
 #include "../repositories/account-repository.h"
+#include "../models/account-model.h"
 
-class ValidationService {
+class CustomerLoginService {
     private:
         const std::string INVALID_NAME_ERROR_MESSAGE = "Name does not exist";
         const std::string INVALID_PIN_ERROR_MESSAGE = "Pin is invalid";
@@ -11,8 +11,8 @@ class ValidationService {
         std::shared_ptr<Account> account;
         std::string error_message = "";
     public:
-        ValidationService(std::shared_ptr<AccountRepository> account_repository);
-        void validate_credentials(std::string name, std::string pin);
+        CustomerLoginService(std::shared_ptr<AccountRepository>);
+        void login(std::string name, std::string password);
         std::string get_error_message();
         std::shared_ptr<Account> get_account();
 };
