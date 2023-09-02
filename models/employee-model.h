@@ -20,7 +20,7 @@ class Employee {
         );
 
         int get_id();
-        std::string get_name();
+        std::string get_username();
         std::string get_password();
         std::string get_phone();
         std::string get_position();

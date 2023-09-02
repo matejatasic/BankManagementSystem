@@ -16,4 +16,16 @@ INSERT INTO accounts (owner, pin, phone, email, registration_date, balance) VALU
 INSERT INTO accounts (owner, pin, phone, email, registration_date, balance) VALUES ('Customer8', '1599742', '1234567898', 'test8@test.com', '2023-02-03', 1000.00);
 INSERT INTO accounts (owner, pin, phone, email, registration_date, balance) VALUES ('Customer9', '1599742', '1234567899', 'test9@test.com', '2023-02-03', 1000.00);
 
+-- Insert entries into the accounts table
+-- The password for all of them is 1234
 INSERT INTO employees (username, password, phone, position) VALUES ('Admin', '1599742', '1234567890', 'admin');
+INSERT INTO employees (username, password, phone, position) VALUES ('Employee1', '1599742', '1234567891', 'teller');
+INSERT INTO employees (username, password, phone, position) VALUES ('Employee2', '1599742', '1234567892', 'teller');
+INSERT INTO employees (username, password, phone, position) VALUES ('Employee3', '1599742', '1234567893', 'teller');
+INSERT INTO employees (username, password, phone, position) VALUES ('Employee4', '1599742', '1234567894', 'teller');
+INSERT INTO employees (username, password, phone, position) VALUES ('Employee5', '1599742', '1234567895', 'teller');
+INSERT INTO employees (username, password, phone, position) VALUES ('Employee6', '1599742', '1234567896', 'teller');
+INSERT INTO employees (username, password, phone, position) VALUES ('Employee7', '1599742', '1234567897', 'teller');
+INSERT INTO employees (username, password, phone, position) VALUES ('Employee8', '1599742', '1234567898', 'teller');
+INSERT INTO employees (username, password, phone, position) VALUES ('Employee9', '1599742', '1234567899', 'teller');
+INSERT INTO employees (username, password, phone, position) VALUES ('Employee0', '1599742', '1234567890', 'teller');

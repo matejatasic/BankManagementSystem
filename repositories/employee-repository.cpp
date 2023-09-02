@@ -1,4 +1,5 @@
 #include <iostream>
+
 #include "employee-repository.h"
 #include "../errors/errors.h"
 
@@ -50,6 +51,39 @@ bool EmployeeRepository::table_exists() {
 
 EmployeeRepository::~EmployeeRepository() {
     sqlite3_close(this->db);
+}
+
+vector<Employee> EmployeeRepository::get_all() {
+    const string query = "SELECT * FROM " + this->table_name;
+
+    this->result = sqlite3_prepare(this->db, query.c_str(), query.length(), &this->stmt, NULL);
+
+    if (this->result != SQLITE_OK) {
+        throw exception();
+    }
+
+    vector<Employee> employees;
+
+    while(sqlite3_step(this->stmt) == SQLITE_ROW) {
+        int id = sqlite3_column_int(this->stmt, 0);
+        const unsigned char* username_char = sqlite3_column_text(this->stmt, 1);
+        const unsigned char* password_char = sqlite3_column_text(this->stmt, 2);
+        const unsigned char* phone_char = sqlite3_column_text(this->stmt, 3);
+        const unsigned char* position_char = sqlite3_column_text(this->stmt, 4);
+
+        string username(reinterpret_cast< char const* >(username_char));
+        string password(reinterpret_cast< char const* >(password_char));
+        string phone(reinterpret_cast< char const* >(phone_char));
+        string position(reinterpret_cast< char const* >(position_char));
+
+        Employee current_employee;
+        current_employee.Init(id, username, password, phone, position);
+        employees.push_back(current_employee);
+    }
+
+    sqlite3_finalize(this->stmt);
+
+    return employees;
 }
 
 shared_ptr<Employee> EmployeeRepository::find_by_name(string username) {

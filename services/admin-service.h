@@ -20,4 +20,5 @@ class AdminService {
             std::shared_ptr<HashService> hash_service
         );
         std::vector<Account> get_all_accounts();
+        std::vector<Employee> get_all_employees();
 };

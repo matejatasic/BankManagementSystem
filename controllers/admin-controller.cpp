@@ -17,11 +17,15 @@ void AdminController::run_app() {
 
         cout << "\nYour choice: ";
         cin >> choice;
+        cout << "\n";
 
         switch(choice)
         {
             case this->CHOICE_ALL_ACCOUNTS:
                 this->see_all_accounts();
+                break;
+            case this->CHOICE_ALL_EMPLOYEES:
+                this->see_all_employees();
                 break;
             case this->CHOICE_FIND_ACCOUNT:
                 break;
@@ -47,6 +51,7 @@ void AdminController::show_menu() {
     cout << "---------\n";
 
     cout << "\n" << this->CHOICE_ALL_ACCOUNTS << ": See All Accounts";
+    cout << "\n" << this->CHOICE_ALL_EMPLOYEES << ": See All Employees";
     cout << "\n" << this->CHOICE_FIND_ACCOUNT << ": Find Account";
     cout << "\n" << this->CHOICE_CREATE_ACCOUNT << ": Create Account";
     cout << "\n" << this->CHOICE_UPDATE_ACCOUNT << ": Update Account";
@@ -61,13 +66,12 @@ void AdminController::see_all_accounts() {
 
     vector<Account> accounts = this->admin_service->get_all_accounts();
 
-    size_t accounts_size = accounts.size();
+    size_t employees_size = accounts.size();
 
-    for (size_t i = 0; i < accounts_size; i++)
-    {
+    for (size_t i = 0; i < employees_size; i++) {
         // Show 5 accounts before prompting for a key press
         if (i != 0 && i % 5 == 0) {
-            cout << "Shown " << i << " accounts of " << accounts_size << endl;
+            cout << "Shown " << i << " accounts of " << employees_size << endl;
             this->show_press_enter();
         }
 
@@ -80,6 +84,29 @@ void AdminController::see_all_accounts() {
         cout << "Email: " << account.get_email() << endl;
         cout << "Registration date: " << account.get_registration_date() << endl;
         cout << "Balance: " << account.get_balance() << endl;
+        cout << "\n";
+    }
+}
+
+void AdminController::see_all_employees() {
+    vector<Employee> employees = this->admin_service->get_all_employees();
+
+    size_t employees_size = employees.size();
+
+    for (size_t i = 0; i < employees_size; i++) {
+        // Show 5 accounts before prompting for a key press
+        if (i != 0 && i % 5 == 0) {
+            cout << "Shown " << i << " employees of " << employees_size << endl;
+            this->show_press_enter();
+        }
+
+        Employee employee = employees[i];
+
+        cout << "Id: " << employee.get_id() << endl;
+        cout << "Owner: " << employee.get_username() << endl;
+        cout << "Password: " << employee.get_password() << endl;
+        cout << "Phone: " << employee.get_phone() << endl;
+        cout << "Position: " << employee.get_position() << endl;
         cout << "\n";
     }
 }

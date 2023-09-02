@@ -20,6 +20,7 @@ void CustomerController::run_app() {
 
         cout << "\nYour choice: ";
         cin >> choice;
+        cout << "\n";
 
         switch(choice)
         {

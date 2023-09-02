@@ -27,3 +27,14 @@ vector<Account> AdminService::get_all_accounts() {
     }
 }
 
+vector<Employee> AdminService::get_all_employees() {
+    try {
+        vector<Employee> employees = this->employee_repository->get_all();
+
+        return employees;
+    }
+    catch(exception) {
+        return {};
+    }
+}
+

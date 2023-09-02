@@ -2,6 +2,7 @@
 #include <sqlite3.h>
 #include <string>
 #include <memory>
+#include <vector>
 #include "../models/employee-model.h"
 
 class  EmployeeRepository {
@@ -15,5 +16,6 @@ class  EmployeeRepository {
     public:
         EmployeeRepository(std::shared_ptr<Employee> employee);
         ~EmployeeRepository();
+        std::vector<Employee> get_all();
         std::shared_ptr<Employee> find_by_name(std::string name);
 };
