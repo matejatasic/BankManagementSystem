@@ -30,6 +30,9 @@ void AdminController::run_app() {
             case this->CHOICE_SHOW_ACCOUNT:
                 this->show_account_details();
                 break;
+            case this->CHOICE_SHOW_EMPLOYEE:
+                this->show_employee_details();
+                break;
             case this->CHOICE_CREATE_ACCOUNT:
                 break;
             case this->CHOICE_UPDATE_ACCOUNT:
@@ -54,6 +57,7 @@ void AdminController::show_menu() {
     cout << "\n" << this->CHOICE_ALL_ACCOUNTS << ": Show All Accounts";
     cout << "\n" << this->CHOICE_ALL_EMPLOYEES << ": Show All Employees";
     cout << "\n" << this->CHOICE_SHOW_ACCOUNT << ": Show Account Details";
+    cout << "\n" << this->CHOICE_SHOW_EMPLOYEE << ": Show Employee Details";
     cout << "\n" << this->CHOICE_CREATE_ACCOUNT << ": Create Account";
     cout << "\n" << this->CHOICE_UPDATE_ACCOUNT << ": Update Account";
     cout << "\n" << this->CHOICE_DELETE_ACCOUNT << ": Delete Account";
@@ -125,6 +129,22 @@ void AdminController::show_account_details() {
     cin >> name;
 
     string result = this->admin_service->get_account_details(name);
+
+    cout << "\n";
+    cout << result << endl;
+    this->show_press_enter();
+}
+
+void AdminController::show_employee_details() {
+    cout << "\nShow Employee Details\n";
+    cout << "-----------------\n\n";
+
+    string username;
+
+    cout << "Type in the username of the employee: ";
+    cin >> username;
+
+    string result = this->admin_service->get_employee_details(username);
 
     cout << "\n";
     cout << result << endl;

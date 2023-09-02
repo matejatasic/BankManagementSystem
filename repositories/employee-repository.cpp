@@ -86,7 +86,7 @@ vector<Employee> EmployeeRepository::get_all() {
     return employees;
 }
 
-shared_ptr<Employee> EmployeeRepository::find_by_name(string username) {
+shared_ptr<Employee> EmployeeRepository::find_by_username(string username) {
     const string query = "SELECT id, username, password, phone, position FROM " + this->table_name + " WHERE username=?";
     this->result = sqlite3_prepare(this->db, query.c_str(), query.length(), &this->stmt, NULL);
 

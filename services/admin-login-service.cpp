@@ -10,7 +10,7 @@ AdminLoginService::AdminLoginService(shared_ptr<EmployeeRepository> employee_rep
 
 void AdminLoginService::login(string username, string password) {
     try {
-        this->employee = this->employee_repository->find_by_name(username);
+        this->employee = this->employee_repository->find_by_username(username);
 
         if(this->employee->get_password() != password) {
             this->error_message = this->INVALID_PASSWORD_ERROR_MESSAGE;

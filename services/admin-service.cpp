@@ -57,3 +57,20 @@ string AdminService::get_account_details(string name) {
         return "There was an error while getting the account details";
     }
 }
+
+string AdminService::get_employee_details(string username) {
+    try {
+        shared_ptr<Employee> employee = this->employee_repository->find_by_username(username);
+
+        return "Username: " + employee->get_username() + "\n"
+        + "Password: " + employee->get_password() + "\n"
+        + "Phone: " + employee->get_phone() + "\n"
+        + "Position: " + employee->get_position() + "\n";
+    }
+    catch(RecordNotFound) {
+        return "The employee with that username does not exist";
+    }
+    catch(exception) {
+        return "There was an error while getting the employee details";
+    }
+}
