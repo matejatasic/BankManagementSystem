@@ -22,12 +22,13 @@ void AdminController::run_app() {
         switch(choice)
         {
             case this->CHOICE_ALL_ACCOUNTS:
-                this->see_all_accounts();
+                this->show_all_accounts();
                 break;
             case this->CHOICE_ALL_EMPLOYEES:
-                this->see_all_employees();
+                this->show_all_employees();
                 break;
-            case this->CHOICE_FIND_ACCOUNT:
+            case this->CHOICE_SHOW_ACCOUNT:
+                this->show_account_details();
                 break;
             case this->CHOICE_CREATE_ACCOUNT:
                 break;
@@ -50,9 +51,9 @@ void AdminController::show_menu() {
     cout << "\nMENU\n";
     cout << "---------\n";
 
-    cout << "\n" << this->CHOICE_ALL_ACCOUNTS << ": See All Accounts";
-    cout << "\n" << this->CHOICE_ALL_EMPLOYEES << ": See All Employees";
-    cout << "\n" << this->CHOICE_FIND_ACCOUNT << ": Find Account";
+    cout << "\n" << this->CHOICE_ALL_ACCOUNTS << ": Show All Accounts";
+    cout << "\n" << this->CHOICE_ALL_EMPLOYEES << ": Show All Employees";
+    cout << "\n" << this->CHOICE_SHOW_ACCOUNT << ": Show Account Details";
     cout << "\n" << this->CHOICE_CREATE_ACCOUNT << ": Create Account";
     cout << "\n" << this->CHOICE_UPDATE_ACCOUNT << ": Update Account";
     cout << "\n" << this->CHOICE_DELETE_ACCOUNT << ": Delete Account";
@@ -60,8 +61,8 @@ void AdminController::show_menu() {
     cout << "\n" << this->CHOICE_EXIT << ": Exit\n";
 };
 
-void AdminController::see_all_accounts() {
-    cout << "\nSee All Accounts\n";
+void AdminController::show_all_accounts() {
+    cout << "\nShow All Accounts\n";
     cout << "-----------------\n\n";
 
     vector<Account> accounts = this->admin_service->get_all_accounts();
@@ -88,7 +89,10 @@ void AdminController::see_all_accounts() {
     }
 }
 
-void AdminController::see_all_employees() {
+void AdminController::show_all_employees() {
+    cout << "\nShow All Employees\n";
+    cout << "-----------------\n\n";
+
     vector<Employee> employees = this->admin_service->get_all_employees();
 
     size_t employees_size = employees.size();
@@ -109,6 +113,22 @@ void AdminController::see_all_employees() {
         cout << "Position: " << employee.get_position() << endl;
         cout << "\n";
     }
+}
+
+void AdminController::show_account_details() {
+    cout << "\nShow Account Details\n";
+    cout << "-----------------\n\n";
+
+    string name;
+
+    cout << "Type in the name of the owner: ";
+    cin >> name;
+
+    string result = this->admin_service->get_account_details(name);
+
+    cout << "\n";
+    cout << result << endl;
+    this->show_press_enter();
 }
 
 void AdminController::show_press_enter() {

@@ -11,7 +11,7 @@ class CustomerService {
         std::shared_ptr<Transaction> transaction;
         std::shared_ptr<HashService> hash_service;
     public:
-        std::string show_account_details();
+        std::string get_account_details();
         std::string deposit_money(double amount);
         std::string withdraw_money(double amount);
         std::string show_transaction_details();

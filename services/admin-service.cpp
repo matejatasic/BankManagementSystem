@@ -1,4 +1,5 @@
 #include "./admin-service.h"
+#include "../errors/errors.h"
 
 using namespace std;
 
@@ -38,3 +39,21 @@ vector<Employee> AdminService::get_all_employees() {
     }
 }
 
+string AdminService::get_account_details(string name) {
+    try {
+        shared_ptr<Account> account = this->account_repository->find_by_owner(name);
+
+        return "Name: " + account->get_owner() + "\n"
+        + "Pin: " + account->get_pin() + "\n"
+        + "Phone: " + account->get_phone() + "\n"
+        + "Email: " + account->get_email() + "\n"
+        + "Registration date: " + account->get_registration_date() + "\n"
+        + "Balance: " + to_string(account->get_balance()) + "\n";
+    }
+    catch(RecordNotFound) {
+        return "The account with that owner does not exist";
+    }
+    catch(exception) {
+        return "There was an error while getting the account details";
+    }
+}

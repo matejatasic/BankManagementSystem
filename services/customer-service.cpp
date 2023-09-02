@@ -19,7 +19,7 @@ CustomerService::CustomerService(
     this->hash_service = hash_service;
 }
 
-string CustomerService::show_account_details() {
+string CustomerService::get_account_details() {
     cout << "\nAcount Details\n";
     cout << "--------------\n\n";
 

@@ -68,7 +68,7 @@ void CustomerController::show_account_details() {
     cout << "\nAcount Details\n";
     cout << "--------------\n\n";
 
-    string result = this->customer_service->show_account_details();
+    string result = this->customer_service->get_account_details();
 
     cout << result;
 
