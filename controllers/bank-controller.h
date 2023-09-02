@@ -1,9 +1,10 @@
 #pragma once
 
 class BankController {
+    protected:
+        void show_press_enter();
     private:
         virtual void show_menu();
-        virtual void show_press_any_key();
     public:
         virtual void run_app();
 };

@@ -20,7 +20,7 @@ class CustomerController: public BankController {
         void show_transaction_details();
         void change_pin();
         void change_personal_details();
-        void show_press_any_key();
+        void show_press_enter();
     public:
         void run_app();
         CustomerController(

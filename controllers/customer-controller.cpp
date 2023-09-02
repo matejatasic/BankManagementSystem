@@ -71,7 +71,7 @@ void CustomerController::show_account_details() {
 
     cout << result;
 
-    show_press_any_key();
+    show_press_enter();
 }
 
 void CustomerController::deposit_money() {
@@ -90,7 +90,7 @@ void CustomerController::deposit_money() {
     cout << "\n";
     cout << result << endl;
 
-    show_press_any_key();
+    show_press_enter();
 }
 
 void CustomerController::withdraw_money() {
@@ -109,7 +109,7 @@ void CustomerController::withdraw_money() {
     cout << "\n";
     cout << result << endl;
 
-    this->show_press_any_key();
+    this->show_press_enter();
 }
 
 void CustomerController::show_transaction_details() {
@@ -120,7 +120,7 @@ void CustomerController::show_transaction_details() {
 
     cout << result << endl;
 
-    this->show_press_any_key();
+    this->show_press_enter();
 }
 
 void CustomerController::change_pin() {
@@ -141,7 +141,7 @@ void CustomerController::change_pin() {
     cout << "\n";
     cout << result << endl;
 
-    this->show_press_any_key();
+    this->show_press_enter();
 }
 
 void CustomerController::change_personal_details() {
@@ -166,11 +166,9 @@ void CustomerController::change_personal_details() {
     cout << "\n";
     cout << result << endl;
 
-    this->show_press_any_key();
+    this->show_press_enter();
 }
 
-void CustomerController::show_press_any_key() {
-    cout << "\nPress Enter to continue… ";
-    cin.get();
-    cin.get();
+void CustomerController::show_press_enter() {
+    BankController::show_press_enter();
 }

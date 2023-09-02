@@ -52,6 +52,42 @@ AccountRepository::~AccountRepository() {
     sqlite3_close(this->db);
 }
 
+vector<Account> AccountRepository::get_all() {
+    const string query = "SELECT * FROM " + this->table_name;
+
+    this->result = sqlite3_prepare(this->db, query.c_str(), query.length(), &this->stmt, NULL);
+
+    if (this->result != SQLITE_OK) {
+        throw exception();
+    }
+
+    vector<Account> accounts;
+
+    while(sqlite3_step(this->stmt) == SQLITE_ROW) {
+        int id = sqlite3_column_int(this->stmt, 0);
+        const unsigned char* name_char = sqlite3_column_text(this->stmt, 1);
+        const unsigned char* pin_char = sqlite3_column_text(this->stmt, 2);
+        const unsigned char* phone_char = sqlite3_column_text(this->stmt, 3);
+        const unsigned char* email_char = sqlite3_column_text(this->stmt, 4);
+        const unsigned char* registration_date_char = sqlite3_column_text(this->stmt, 5);
+        double balance = sqlite3_column_double(this->stmt, 6);
+
+        string name_str(reinterpret_cast< char const* >(name_char));
+        string pin(reinterpret_cast< char const* >(pin_char));
+        string phone(reinterpret_cast< char const* >(phone_char));
+        string email(reinterpret_cast< char const* >(email_char));
+        string registration_date(reinterpret_cast< char const* >(registration_date_char));
+
+        Account current_account;
+        current_account.Init(id, name_str, pin, phone, email, registration_date, balance);
+        accounts.push_back(current_account);
+    }
+
+    sqlite3_finalize(this->stmt);
+
+    return accounts;
+}
+
 shared_ptr<Account> AccountRepository::find_by_owner(string name) {
     const string query = "SELECT id, owner, pin, phone, email, registration_date, balance  FROM " + this->table_name + " WHERE owner=?";
     this->result = sqlite3_prepare(this->db, query.c_str(), query.length(), &this->stmt, NULL);
