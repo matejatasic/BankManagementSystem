@@ -88,6 +88,37 @@ vector<Account> AccountRepository::get_all() {
     return accounts;
 }
 
+void AccountRepository::create(
+    string name,
+    string pin,
+    string phone,
+    string email,
+    string registration_date,
+    double balance
+) {
+    const string query = "INSERT INTO accounts (owner, pin, phone, email, registration_date, balance) VALUES (?, ?, ?, ?, ?, ?)";
+    this->result = sqlite3_prepare(this->db, query.c_str(), query.length(), &this->stmt, NULL);
+
+    if (this->result != SQLITE_OK) {
+        throw exception();
+    }
+
+    sqlite3_bind_text(this->stmt, 1, name.c_str(), name.length(), NULL);
+    sqlite3_bind_text(this->stmt, 2, pin.c_str(), pin.length(), NULL);
+    sqlite3_bind_text(this->stmt, 3, phone.c_str(), phone.length(), NULL);
+    sqlite3_bind_text(this->stmt, 4, email.c_str(), email.length(), NULL);
+    sqlite3_bind_text(this->stmt, 5, registration_date.c_str(), registration_date.length(), NULL);
+    sqlite3_bind_double(this->stmt, 6, balance);
+
+    this->result = sqlite3_step(this->stmt);
+    sqlite3_finalize(this->stmt);
+
+    if (this->result != SQLITE_DONE) {
+        throw CreateException();
+    }
+
+}
+
 shared_ptr<Account> AccountRepository::find_by_owner(string name) {
     const string query = "SELECT id, owner, pin, phone, email, registration_date, balance  FROM " + this->table_name + " WHERE owner=?";
     this->result = sqlite3_prepare(this->db, query.c_str(), query.length(), &this->stmt, NULL);
@@ -168,9 +199,9 @@ void AccountRepository::update_pin(string pin) {
 }
 
 void AccountRepository::update_personal_details(
-    std::string owner,
-    std::string phone,
-    std::string email
+    string owner,
+    string phone,
+    string email
 ) {
     const string query = "UPDATE " + this->table_name +" SET owner=?, phone=?, email=? WHERE id=?";
 

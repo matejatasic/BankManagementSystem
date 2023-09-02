@@ -23,4 +23,10 @@ class AdminService {
         std::vector<Employee> get_all_employees();
         std::string get_account_details(std::string name);
         std::string get_employee_details(std::string username);
+        std::string create_account(
+            std::string owner,
+            std::string pin,
+            std::string phone,
+            std::string email
+        );
 };

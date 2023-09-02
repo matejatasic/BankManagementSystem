@@ -1,3 +1,6 @@
+#include <iostream>
+#include <chrono>
+#include <ctime>
 #include "./admin-service.h"
 #include "../errors/errors.h"
 
@@ -72,5 +75,34 @@ string AdminService::get_employee_details(string username) {
     }
     catch(exception) {
         return "There was an error while getting the employee details";
+    }
+}
+
+string AdminService::create_account(
+    string name,
+    string pin,
+    string phone,
+    string email
+) {
+    time_t raw_time;
+    std::tm* time_info;
+    char registration_date [80];
+
+    std::time(&raw_time);
+    time_info = std::localtime(&raw_time);
+    std::strftime(registration_date,80,"%Y-%m-%d",time_info);
+
+    string hashed_pin = to_string(this->hash_service->hash(pin));
+
+    try {
+        this->account_repository->create(name, hashed_pin, phone, email, registration_date, 0);
+
+        return "Account successfully created";
+    }
+    catch(CreateException) {
+        return "There was a problem while creating the account";
+    }
+    catch(exception) {
+        return "There was a problem while connecting to the database";
     }
 }

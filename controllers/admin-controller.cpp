@@ -34,6 +34,7 @@ void AdminController::run_app() {
                 this->show_employee_details();
                 break;
             case this->CHOICE_CREATE_ACCOUNT:
+                this->create_account();
                 break;
             case this->CHOICE_UPDATE_ACCOUNT:
                 break;
@@ -145,6 +146,28 @@ void AdminController::show_employee_details() {
     cin >> username;
 
     string result = this->admin_service->get_employee_details(username);
+
+    cout << "\n";
+    cout << result << endl;
+    this->show_press_enter();
+}
+
+void AdminController::create_account() {
+    cout << "\nCreate Account\n";
+    cout << "--------------\n\n";
+
+    string name, pin, phone, email;
+
+    cout << "Type in the name: ";
+    cin >> name;
+    cout << "Type in the pin: ";
+    cin >> pin;
+    cout << "Type in the phone: ";
+    cin >> phone;
+    cout << "Type in the email: ";
+    cin >> email;
+
+    string result = this->admin_service->create_account(name, pin, phone, email);
 
     cout << "\n";
     cout << result << endl;
