@@ -5,7 +5,6 @@
 #include "../services/hash-service.h"
 
 class AdminService {
-    private:
         std::shared_ptr<EmployeeRepository> employee_repository;
         std::shared_ptr<Employee> employee;
         std::shared_ptr<AccountRepository> account_repository;
@@ -37,4 +36,5 @@ class AdminService {
             std::string phone,
             std::string email
         );
+        std::string delete_account(std::string owner);
 };

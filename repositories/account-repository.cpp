@@ -252,3 +252,22 @@ void AccountRepository::update(
         throw UpdateException();
     }
 }
+
+void AccountRepository::destroy(int id) {
+    const string query = "DELETE FROM " + this->table_name +" WHERE id=?";
+
+    this->result = sqlite3_prepare(this->db, query.c_str(), query.length(), &this->stmt, NULL);
+
+    if (this->result != SQLITE_OK) {
+        throw exception();
+    }
+
+    sqlite3_bind_int(this->stmt, 1, id);
+
+    this->result = sqlite3_step(this->stmt);
+    sqlite3_finalize(this->stmt);
+
+    if (this->result != SQLITE_DONE) {
+        throw DeleteException();
+    }
+}

@@ -42,8 +42,8 @@ vector<Employee> AdminService::get_all_employees() {
     }
 }
 
-shared_ptr<Account> AdminService::get_account(string owner_name) {
-    return this->account_repository->find_by_owner(owner_name);
+shared_ptr<Account> AdminService::get_account(string owner) {
+    return this->account_repository->find_by_owner(owner);
 }
 
 string AdminService::get_account_details(string name) {
@@ -127,6 +127,25 @@ string AdminService::update_account(
     }
     catch(UpdateException) {
         return "There was a problem while updating the account";
+    }
+    catch(exception) {
+        return "There was a problem while connecting to the database";
+    }
+}
+
+string AdminService::delete_account(string owner) {
+    try {
+        shared_ptr<Account> account = this->account_repository->find_by_owner(owner);
+
+        this->account_repository->destroy(account->get_id());
+
+        return "Successfully deleted the account";
+    }
+    catch(RecordNotFound) {
+        return "The account with that owner does not exist";
+    }
+    catch(DeleteException) {
+        return "There was a problem while trying to delete the account";
     }
     catch(exception) {
         return "There was a problem while connecting to the database";

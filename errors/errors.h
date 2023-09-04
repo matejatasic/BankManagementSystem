@@ -7,3 +7,5 @@ class RecordNotFound : public std::exception {};
 class CreateException : public std::exception {};
 
 class UpdateException : public std::exception {};
+
+class DeleteException : public std::exception {};

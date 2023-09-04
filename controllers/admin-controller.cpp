@@ -41,6 +41,7 @@ void AdminController::run_app() {
                 this->update_account();
                 break;
             case this->CHOICE_DELETE_ACCOUNT:
+                this->delete_account();
                 break;
             case this->CHOICE_VIEW_TRANSACTIONS:
                 break;
@@ -177,7 +178,7 @@ void AdminController::create_account() {
 }
 
 void AdminController::update_account() {
-    cout << "\nCreate Account\n";
+    cout << "\nUpdate Account\n";
     cout << "--------------\n\n";
 
     string owner_name, name, pin, phone, email;
@@ -215,6 +216,22 @@ void AdminController::update_account() {
         phone,
         email
     );
+
+    cout << "\n";
+    cout << result << endl;
+    this->show_press_enter();
+}
+
+void AdminController::delete_account() {
+    cout << "\nDelete Account\n";
+    cout << "--------------\n\n";
+
+    string owner_name;
+
+    cout << "Type in the owner: ";
+    cin >> owner_name;
+
+    string result = this->admin_service->delete_account(owner_name);
 
     cout << "\n";
     cout << result << endl;

@@ -40,4 +40,5 @@ class  AccountRepository {
             std::string phone,
             std::string email
         );
+        void destroy(int id);
 };

@@ -28,4 +28,5 @@ class AdminController: public BankController {
         void show_employee_details();
         void create_account();
         void update_account();
+        void delete_account();
 };
