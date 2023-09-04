@@ -1,6 +1,7 @@
 #include <iostream>
 #include "./admin-controller.h"
 #include "../models/account-model.h"
+#include "../errors/errors.h"
 
 using namespace std;
 
@@ -37,6 +38,7 @@ void AdminController::run_app() {
                 this->create_account();
                 break;
             case this->CHOICE_UPDATE_ACCOUNT:
+                this->update_account();
                 break;
             case this->CHOICE_DELETE_ACCOUNT:
                 break;
@@ -168,6 +170,51 @@ void AdminController::create_account() {
     cin >> email;
 
     string result = this->admin_service->create_account(name, pin, phone, email);
+
+    cout << "\n";
+    cout << result << endl;
+    this->show_press_enter();
+}
+
+void AdminController::update_account() {
+    cout << "\nCreate Account\n";
+    cout << "--------------\n\n";
+
+    string owner_name, name, pin, phone, email;
+
+
+    cout << "Type in the owner: ";
+    cin >> owner_name;
+
+    shared_ptr<Account> account;
+
+    try {
+        account = this->admin_service->get_account(owner_name);
+    }
+    catch(RecordNotFound) {
+        cout << "\n";
+        cout << "Account with that owner does not exist";
+        this->show_press_enter();
+
+        return;
+    }
+
+    cout << "Type in the name: ";
+    cin >> name;
+    cout << "Type in the pin: ";
+    cin >> pin;
+    cout << "Type in the phone: ";
+    cin >> phone;
+    cout << "Type in the email: ";
+    cin >> email;
+
+    string result = this->admin_service->update_account(
+        account->get_id(),
+        name,
+        pin,
+        phone,
+        email
+    );
 
     cout << "\n";
     cout << result << endl;

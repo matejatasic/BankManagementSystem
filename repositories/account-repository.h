@@ -33,4 +33,11 @@ class  AccountRepository {
             std::string phone,
             std::string email
         );
+        void update(
+            int id,
+            std::string owner,
+            std::string pin,
+            std::string phone,
+            std::string email
+        );
 };

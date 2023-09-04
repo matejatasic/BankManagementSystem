@@ -42,9 +42,13 @@ vector<Employee> AdminService::get_all_employees() {
     }
 }
 
+shared_ptr<Account> AdminService::get_account(string owner_name) {
+    return this->account_repository->find_by_owner(owner_name);
+}
+
 string AdminService::get_account_details(string name) {
     try {
-        shared_ptr<Account> account = this->account_repository->find_by_owner(name);
+        shared_ptr<Account> account = this->get_account(name);
 
         return "Name: " + account->get_owner() + "\n"
         + "Pin: " + account->get_pin() + "\n"
@@ -101,6 +105,28 @@ string AdminService::create_account(
     }
     catch(CreateException) {
         return "There was a problem while creating the account";
+    }
+    catch(exception) {
+        return "There was a problem while connecting to the database";
+    }
+}
+
+string AdminService::update_account(
+    int id,
+    string name,
+    string pin,
+    string phone,
+    string email
+) {
+    string hashed_pin = to_string(this->hash_service->hash(pin));
+
+    try {
+        this->account_repository->update(account->get_id(), name, hashed_pin, phone, email);
+
+        return "Account successfully updated";
+    }
+    catch(UpdateException) {
+        return "There was a problem while updating the account";
     }
     catch(exception) {
         return "There was a problem while connecting to the database";
