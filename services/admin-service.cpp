@@ -154,6 +154,27 @@ string AdminService::delete_account(string owner) {
     }
 }
 
+std::string AdminService::create_employee(
+    std::string username,
+    std::string password,
+    std::string phone,
+    std::string position
+) {
+    string hashed_password = to_string(this->hash_service->hash(password));
+
+    try {
+        this->employee_repository->create(username, hashed_password, phone, position);
+
+        return "Employee successfully created";
+    }
+    catch(CreateException) {
+        return "There was a problem while creating the employee";
+    }
+    catch(exception) {
+        return "There was a problem while connecting to the database";
+    }
+}
+
 string AdminService::get_account_transactions_details(std::string owner) {
     try {
         shared_ptr<Account> account = this->account_repository->find_by_owner(owner);

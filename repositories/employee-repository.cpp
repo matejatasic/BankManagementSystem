@@ -86,6 +86,33 @@ vector<Employee> EmployeeRepository::get_all() {
     return employees;
 }
 
+void EmployeeRepository::create(
+    string username,
+    string password,
+    string phone,
+    string position
+) {
+    const string query = "INSERT INTO employees (username, password, phone, position) VALUES (?, ?, ?, ?)";
+
+    this->result = sqlite3_prepare(this->db, query.c_str(), query.length(), &this->stmt, NULL);
+
+    if (this->result != SQLITE_OK) {
+        throw exception();
+    }
+
+    sqlite3_bind_text(this->stmt, 1, username.c_str(), username.length(), NULL);
+    sqlite3_bind_text(this->stmt, 2, password.c_str(), password.length(), NULL);
+    sqlite3_bind_text(this->stmt, 3, phone.c_str(), phone.length(), NULL);
+    sqlite3_bind_text(this->stmt, 4, position.c_str(), position.length(), NULL);
+
+    this->result = sqlite3_step(this->stmt);
+    sqlite3_finalize(this->stmt);
+
+    if (this->result != SQLITE_DONE) {
+        throw CreateException();
+    }
+}
+
 shared_ptr<Employee> EmployeeRepository::find_by_username(string username) {
     const string query = "SELECT id, username, password, phone, position FROM " + this->table_name + " WHERE username=?";
     this->result = sqlite3_prepare(this->db, query.c_str(), query.length(), &this->stmt, NULL);

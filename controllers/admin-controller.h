@@ -9,8 +9,11 @@ class AdminController: public BankController {
     static const int CHOICE_CREATE_ACCOUNT = 5;
     static const int CHOICE_UPDATE_ACCOUNT = 6;
     static const int CHOICE_DELETE_ACCOUNT = 7;
-    static const int CHOICE_SHOW_ACCOUNT_TRANSACTIONS = 8;
-    static const int CHOICE_EXIT = 9;
+    static const int CHOICE_CREATE_EMPLOYEE = 8;
+    static const int CHOICE_UPDATE_EMPLOYEE = 9;
+    static const int CHOICE_DELETE_EMPLOYEE = 10;
+    static const int CHOICE_SHOW_ACCOUNT_TRANSACTIONS = 11;
+    static const int CHOICE_EXIT = 12;
 
     private:
         std::shared_ptr<AdminService> admin_service;
@@ -29,5 +32,6 @@ class AdminController: public BankController {
         void create_account();
         void update_account();
         void delete_account();
+        void create_employee();
         void show_account_transactions();
 };

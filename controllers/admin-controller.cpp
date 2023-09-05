@@ -43,6 +43,13 @@ void AdminController::run_app() {
             case this->CHOICE_DELETE_ACCOUNT:
                 this->delete_account();
                 break;
+            case this->CHOICE_CREATE_EMPLOYEE:
+                this->create_employee();
+                break;
+            case this->CHOICE_UPDATE_EMPLOYEE:
+                break;
+            case this->CHOICE_DELETE_EMPLOYEE:
+                break;
             case this->CHOICE_SHOW_ACCOUNT_TRANSACTIONS:
                 this->show_account_transactions();
                 break;
@@ -66,6 +73,9 @@ void AdminController::show_menu() {
     cout << "\n" << this->CHOICE_CREATE_ACCOUNT << ": Create Account";
     cout << "\n" << this->CHOICE_UPDATE_ACCOUNT << ": Update Account";
     cout << "\n" << this->CHOICE_DELETE_ACCOUNT << ": Delete Account";
+    cout << "\n" << this->CHOICE_CREATE_EMPLOYEE << ": Create Employee";
+    cout << "\n" << this->CHOICE_UPDATE_EMPLOYEE << ": Update Employee";
+    cout << "\n" << this->CHOICE_DELETE_EMPLOYEE << ": Delete Employee";
     cout << "\n" << this->CHOICE_SHOW_ACCOUNT_TRANSACTIONS << ": Show Account Transactions";
     cout << "\n" << this->CHOICE_EXIT << ": Exit\n";
 };
@@ -233,6 +243,28 @@ void AdminController::delete_account() {
     cin >> owner_name;
 
     string result = this->admin_service->delete_account(owner_name);
+
+    cout << "\n";
+    cout << result << endl;
+    this->show_press_enter();
+}
+
+void AdminController::create_employee() {
+    cout << "\nCreate Employee\n";
+    cout << "--------------\n\n";
+
+    string username, password, phone, position;
+
+    cout << "Type in the username: ";
+    cin >> username;
+    cout << "Type in the password: ";
+    cin >> password;
+    cout << "Type in the phone: ";
+    cin >> phone;
+    cout << "Type in the position: ";
+    cin >> position;
+
+    string result = this->admin_service->create_employee(username, password, phone, position);
 
     cout << "\n";
     cout << result << endl;

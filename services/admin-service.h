@@ -41,5 +41,11 @@ class AdminService {
             std::string email
         );
         std::string delete_account(std::string owner);
+        std::string create_employee(
+            std::string username,
+            std::string password,
+            std::string phone,
+            std::string position
+        );
         std::string get_account_transactions_details(std::string owner);
 };

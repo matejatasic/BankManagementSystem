@@ -17,5 +17,11 @@ class  EmployeeRepository {
         EmployeeRepository(std::shared_ptr<Employee> employee);
         ~EmployeeRepository();
         std::vector<Employee> get_all();
+        void create(
+            std::string username,
+            std::string password,
+            std::string phone,
+            std::string position
+        );
         std::shared_ptr<Employee> find_by_username(std::string name);
 };
