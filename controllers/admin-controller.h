@@ -9,7 +9,7 @@ class AdminController: public BankController {
     static const int CHOICE_CREATE_ACCOUNT = 5;
     static const int CHOICE_UPDATE_ACCOUNT = 6;
     static const int CHOICE_DELETE_ACCOUNT = 7;
-    static const int CHOICE_VIEW_TRANSACTIONS = 8;
+    static const int CHOICE_SHOW_ACCOUNT_TRANSACTIONS = 8;
     static const int CHOICE_EXIT = 9;
 
     private:
@@ -29,4 +29,5 @@ class AdminController: public BankController {
         void create_account();
         void update_account();
         void delete_account();
+        void show_account_transactions();
 };

@@ -91,12 +91,14 @@ int get_mode() {
         shared_ptr<EmployeeRepository> employee_repository = make_shared<EmployeeRepository>(employee);
         shared_ptr<Account> account = make_shared<Account>();
         shared_ptr<AccountRepository> account_repository = make_shared<AccountRepository>(account);
+        shared_ptr<TransactionRepository> transaction_repository = make_shared<TransactionRepository>();
         shared_ptr<HashService> hash_service = make_shared<HashService>();
         shared_ptr<AdminService> admin_service = make_shared<AdminService>(
             employee_repository,
             employee,
             account_repository,
             account,
+            transaction_repository,
             hash_service
         );
 

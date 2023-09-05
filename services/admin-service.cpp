@@ -11,12 +11,14 @@ AdminService::AdminService(
     shared_ptr<Employee> employee,
     shared_ptr<AccountRepository> account_repository,
     shared_ptr<Account> account,
+    shared_ptr<TransactionRepository> transaction_repository,
     shared_ptr<HashService> hash_service
 ) {
     this->employee_repository = employee_repository;
     this-> employee = employee;
     this->account_repository = account_repository;
     this->account = account;
+    this->transaction_repository = transaction_repository;
     this->hash_service = hash_service;
 };
 
@@ -42,10 +44,6 @@ vector<Employee> AdminService::get_all_employees() {
     }
 }
 
-shared_ptr<Account> AdminService::get_account(string owner) {
-    return this->account_repository->find_by_owner(owner);
-}
-
 string AdminService::get_account_details(string name) {
     try {
         shared_ptr<Account> account = this->get_account(name);
@@ -63,6 +61,10 @@ string AdminService::get_account_details(string name) {
     catch(exception) {
         return "There was an error while getting the account details";
     }
+}
+
+shared_ptr<Account> AdminService::get_account(string owner) {
+    return this->account_repository->find_by_owner(owner);
 }
 
 string AdminService::get_employee_details(string username) {
@@ -150,4 +152,37 @@ string AdminService::delete_account(string owner) {
     catch(exception) {
         return "There was a problem while connecting to the database";
     }
+}
+
+string AdminService::get_account_transactions_details(std::string owner) {
+    try {
+        shared_ptr<Account> account = this->account_repository->find_by_owner(owner);
+
+        vector<Transaction> transactions = this->get_transactions(account->get_id());
+
+        if (transactions.size() == 0) {
+            return "This account has no transactions";
+        }
+
+        string result = "";
+
+        for (Transaction transaction : transactions)
+        {
+            result += "Type: " + transaction.get_type() + "\n";
+            result += "Amount: " + to_string(transaction.get_amount()) + "\n";
+            result += "Datetime: " + transaction.get_datetime() + "\n\n";
+        }
+
+        return result;
+    }
+    catch(RecordNotFound) {
+        return "The account with that owner does not exist";
+    }
+    catch(exception) {
+        return "There was a problem while connecting to the database";
+    }
+}
+
+vector<Transaction> AdminService::get_transactions(int account_id) {
+    return this->transaction_repository->find_by_account_id(account_id);
 }

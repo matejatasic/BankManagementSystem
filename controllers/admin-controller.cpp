@@ -43,7 +43,8 @@ void AdminController::run_app() {
             case this->CHOICE_DELETE_ACCOUNT:
                 this->delete_account();
                 break;
-            case this->CHOICE_VIEW_TRANSACTIONS:
+            case this->CHOICE_SHOW_ACCOUNT_TRANSACTIONS:
+                this->show_account_transactions();
                 break;
             case this->CHOICE_EXIT:
                 exit(0);
@@ -65,7 +66,7 @@ void AdminController::show_menu() {
     cout << "\n" << this->CHOICE_CREATE_ACCOUNT << ": Create Account";
     cout << "\n" << this->CHOICE_UPDATE_ACCOUNT << ": Update Account";
     cout << "\n" << this->CHOICE_DELETE_ACCOUNT << ": Delete Account";
-    cout << "\n" << this->CHOICE_VIEW_TRANSACTIONS << ": View Transactions";
+    cout << "\n" << this->CHOICE_SHOW_ACCOUNT_TRANSACTIONS << ": Show Account Transactions";
     cout << "\n" << this->CHOICE_EXIT << ": Exit\n";
 };
 
@@ -232,6 +233,22 @@ void AdminController::delete_account() {
     cin >> owner_name;
 
     string result = this->admin_service->delete_account(owner_name);
+
+    cout << "\n";
+    cout << result << endl;
+    this->show_press_enter();
+}
+
+void AdminController::show_account_transactions() {
+    cout << "\nShow Account Transactions\n";
+    cout << "--------------------------\n\n";
+
+    string owner_name;
+
+    cout << "Type in the owner: ";
+    cin >> owner_name;
+
+    string result = this->admin_service->get_account_transactions_details(owner_name);
 
     cout << "\n";
     cout << result << endl;
