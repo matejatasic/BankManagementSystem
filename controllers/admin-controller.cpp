@@ -47,6 +47,7 @@ void AdminController::run_app() {
                 this->create_employee();
                 break;
             case this->CHOICE_UPDATE_EMPLOYEE:
+                this->update_employee();
                 break;
             case this->CHOICE_DELETE_EMPLOYEE:
                 break;
@@ -192,8 +193,7 @@ void AdminController::update_account() {
     cout << "\nUpdate Account\n";
     cout << "--------------\n\n";
 
-    string owner_name, name, pin, phone, email;
-
+    string owner_name;
 
     cout << "Type in the owner: ";
     cin >> owner_name;
@@ -205,11 +205,13 @@ void AdminController::update_account() {
     }
     catch(RecordNotFound) {
         cout << "\n";
-        cout << "Account with that owner does not exist";
+        cout << "Account with that owner does not exist" << endl;
         this->show_press_enter();
 
         return;
     }
+
+    string name, pin, phone, email;
 
     cout << "Type in the name: ";
     cin >> name;
@@ -265,6 +267,46 @@ void AdminController::create_employee() {
     cin >> position;
 
     string result = this->admin_service->create_employee(username, password, phone, position);
+
+    cout << "\n";
+    cout << result << endl;
+    this->show_press_enter();
+}
+
+void AdminController::update_employee() {
+    cout << "\nUpdate Employee\n";
+    cout << "--------------\n\n";
+
+    string username;
+
+    cout << "Type in the username: ";
+    cin >> username;
+
+    shared_ptr<Employee> employee;
+
+    try {
+        employee = this->admin_service->get_employee(username);
+    }
+    catch(RecordNotFound) {
+        cout << "\n";
+        cout << "Employee with that username does not exist" << endl;
+        this->show_press_enter();
+
+        return;
+    }
+
+    string password, phone, position;
+
+    cout << "Type in the username: ";
+    cin >> username;
+    cout << "Type in the password: ";
+    cin >> password;
+    cout << "Type in the phone: ";
+    cin >> phone;
+    cout << "Type in the position: ";
+    cin >> position;
+
+    string result = this->admin_service->update_employee(employee->get_id(), username, password, phone, position);
 
     cout << "\n";
     cout << result << endl;

@@ -33,5 +33,6 @@ class AdminController: public BankController {
         void update_account();
         void delete_account();
         void create_employee();
+        void update_employee();
         void show_account_transactions();
 };

@@ -23,5 +23,12 @@ class  EmployeeRepository {
             std::string phone,
             std::string position
         );
+        void update(
+            int id,
+            std::string username,
+            std::string password,
+            std::string phone,
+            std::string position
+        );
         std::shared_ptr<Employee> find_by_username(std::string name);
 };

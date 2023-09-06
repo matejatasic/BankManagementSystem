@@ -84,6 +84,10 @@ string AdminService::get_employee_details(string username) {
     }
 }
 
+shared_ptr<Employee> AdminService::get_employee(string username) {
+    return this->employee_repository->find_by_username(username);
+}
+
 string AdminService::create_account(
     string name,
     string pin,
@@ -154,11 +158,11 @@ string AdminService::delete_account(string owner) {
     }
 }
 
-std::string AdminService::create_employee(
-    std::string username,
-    std::string password,
-    std::string phone,
-    std::string position
+string AdminService::create_employee(
+    string username,
+    string password,
+    string phone,
+    string position
 ) {
     string hashed_password = to_string(this->hash_service->hash(password));
 
@@ -175,7 +179,7 @@ std::string AdminService::create_employee(
     }
 }
 
-string AdminService::get_account_transactions_details(std::string owner) {
+string AdminService::get_account_transactions_details(string owner) {
     try {
         shared_ptr<Account> account = this->account_repository->find_by_owner(owner);
 
@@ -198,6 +202,34 @@ string AdminService::get_account_transactions_details(std::string owner) {
     }
     catch(RecordNotFound) {
         return "The account with that owner does not exist";
+    }
+    catch(exception) {
+        return "There was a problem while connecting to the database";
+    }
+}
+
+string AdminService::update_employee(
+    int id,
+    string username,
+    string password,
+    string phone,
+    string position
+) {
+    string hashed_password = to_string(this->hash_service->hash(password));
+
+    try {
+        this->employee_repository->update(
+            id,
+            username,
+            hashed_password,
+            phone,
+            position
+        );
+
+        return "Employee successfully updated";
+    }
+    catch(CreateException) {
+        return "There was a problem while updating the employee";
     }
     catch(exception) {
         return "There was a problem while connecting to the database";
