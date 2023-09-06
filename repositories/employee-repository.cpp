@@ -142,6 +142,25 @@ void EmployeeRepository::update(
     }
 }
 
+void EmployeeRepository::destroy(int id) {
+    const string query = "DELETE FROM " + this->table_name + " WHERE id=?";
+
+    this->result = sqlite3_prepare(this->db, query.c_str(), query.length(), &this->stmt, NULL);
+
+    if (this->result != SQLITE_OK) {
+        throw exception();
+    }
+
+    sqlite3_bind_int(this->stmt, 1, id);
+
+    this->result = sqlite3_step(this->stmt);
+    sqlite3_finalize(this->stmt);
+
+    if (this->result != SQLITE_DONE) {
+        throw DeleteException();
+    }
+}
+
 shared_ptr<Employee> EmployeeRepository::find_by_username(string username) {
     const string query = "SELECT id, username, password, phone, position FROM " + this->table_name + " WHERE username=?";
     this->result = sqlite3_prepare(this->db, query.c_str(), query.length(), &this->stmt, NULL);

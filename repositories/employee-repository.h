@@ -30,5 +30,6 @@ class  EmployeeRepository {
             std::string phone,
             std::string position
         );
+        void destroy(int id);
         std::shared_ptr<Employee> find_by_username(std::string name);
 };

@@ -179,6 +179,53 @@ string AdminService::create_employee(
     }
 }
 
+string AdminService::update_employee(
+    int id,
+    string username,
+    string password,
+    string phone,
+    string position
+) {
+    string hashed_password = to_string(this->hash_service->hash(password));
+
+    try {
+        this->employee_repository->update(
+            id,
+            username,
+            hashed_password,
+            phone,
+            position
+        );
+
+        return "Employee successfully updated";
+    }
+    catch(UpdateException) {
+        return "There was a problem while updating the employee";
+    }
+    catch(exception) {
+        return "There was a problem while connecting to the database";
+    }
+}
+
+string AdminService::delete_employee(string username) {
+    try {
+        shared_ptr<Employee> employee = this->employee_repository->find_by_username(username);
+
+        this->employee_repository->destroy(employee->get_id());
+
+        return "Successfully deleted the employee";
+    }
+    catch(RecordNotFound) {
+        return "The employee with that username does not exist";
+    }
+    catch(DeleteException) {
+        return "There was a problem while trying to delete the employee";
+    }
+    catch(exception) {
+        return "There was a problem while connecting to the database";
+    }
+}
+
 string AdminService::get_account_transactions_details(string owner) {
     try {
         shared_ptr<Account> account = this->account_repository->find_by_owner(owner);
@@ -202,34 +249,6 @@ string AdminService::get_account_transactions_details(string owner) {
     }
     catch(RecordNotFound) {
         return "The account with that owner does not exist";
-    }
-    catch(exception) {
-        return "There was a problem while connecting to the database";
-    }
-}
-
-string AdminService::update_employee(
-    int id,
-    string username,
-    string password,
-    string phone,
-    string position
-) {
-    string hashed_password = to_string(this->hash_service->hash(password));
-
-    try {
-        this->employee_repository->update(
-            id,
-            username,
-            hashed_password,
-            phone,
-            position
-        );
-
-        return "Employee successfully updated";
-    }
-    catch(CreateException) {
-        return "There was a problem while updating the employee";
     }
     catch(exception) {
         return "There was a problem while connecting to the database";

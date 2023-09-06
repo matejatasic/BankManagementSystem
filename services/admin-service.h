@@ -56,4 +56,5 @@ class AdminService {
             std::string position
         );
         std::string get_account_transactions_details(std::string owner);
+        std::string delete_employee(std::string username);
 };

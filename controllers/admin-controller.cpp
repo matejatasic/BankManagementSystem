@@ -50,6 +50,7 @@ void AdminController::run_app() {
                 this->update_employee();
                 break;
             case this->CHOICE_DELETE_EMPLOYEE:
+                this->delete_employee();
                 break;
             case this->CHOICE_SHOW_ACCOUNT_TRANSACTIONS:
                 this->show_account_transactions();
@@ -307,6 +308,22 @@ void AdminController::update_employee() {
     cin >> position;
 
     string result = this->admin_service->update_employee(employee->get_id(), username, password, phone, position);
+
+    cout << "\n";
+    cout << result << endl;
+    this->show_press_enter();
+}
+
+void AdminController::delete_employee() {
+    cout << "\nDelete Employee\n";
+    cout << "--------------\n\n";
+
+    string username;
+
+    cout << "Type in the username: ";
+    cin >> username;
+
+    string result = this->admin_service->delete_employee(username);
 
     cout << "\n";
     cout << result << endl;
