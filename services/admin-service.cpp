@@ -1,8 +1,8 @@
 #include <iostream>
 #include <chrono>
 #include <ctime>
-#include "./admin-service.h"
-#include "../errors/errors.h"
+#include "../headers/services/admin-service.h"
+#include "../headers/errors/errors.h"
 
 using namespace std;
 

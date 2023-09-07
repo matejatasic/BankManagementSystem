@@ -1,6 +1,6 @@
 #include <iostream>
-#include "account-repository.h"
-#include "../errors/errors.h"
+#include "../headers/repositories/account-repository.h"
+#include "../headers/errors/errors.h"
 
 using namespace std;
 

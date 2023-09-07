@@ -1,7 +1,7 @@
 #include <iostream>
-#include "./admin-controller.h"
-#include "../models/account-model.h"
-#include "../errors/errors.h"
+#include "../headers/controllers/admin-controller.h"
+#include "../headers/models/account-model.h"
+#include "../headers/errors/errors.h"
 
 using namespace std;
 

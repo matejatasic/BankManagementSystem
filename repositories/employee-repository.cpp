@@ -1,7 +1,7 @@
 #include <iostream>
 
-#include "employee-repository.h"
-#include "../errors/errors.h"
+#include "../headers/repositories/employee-repository.h"
+#include "../headers/errors/errors.h"
 
 using namespace std;
 

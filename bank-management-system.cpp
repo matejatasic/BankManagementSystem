@@ -1,13 +1,13 @@
 #include <iostream>
 #include <string>
 #include <memory>
-#include "repositories/transaction-repository.h"
-#include "controllers/customer-controller.h"
-#include "controllers/admin-controller.h"
-#include "controllers/admin-login-controller.h"
-#include "controllers/customer-login-controller.h"
-#include "services/customer-service.h"
-#include "services/hash-service.h"
+#include "./headers/repositories/transaction-repository.h"
+#include "./headers/controllers/customer-controller.h"
+#include "./headers/controllers/admin-controller.h"
+#include "./headers/controllers/admin-login-controller.h"
+#include "./headers/controllers/customer-login-controller.h"
+#include "./headers/services/customer-service.h"
+#include "./headers/services/hash-service.h"
 
 using namespace std;
 
@@ -102,7 +102,7 @@ int get_mode() {
             hash_service
         );
 
-         shared_ptr<AdminController> admin_controller = make_shared<AdminController>(admin_service);
+        shared_ptr<AdminController> admin_controller = make_shared<AdminController>(admin_service);
 
         return admin_controller;
     }

@@ -1,6 +1,6 @@
 #include <iostream>
-#include "transaction-repository.h"
-#include "../errors/errors.h"
+#include "../headers/repositories/transaction-repository.h"
+#include "../headers/errors/errors.h"
 
 using namespace std;
 
@@ -51,7 +51,7 @@ vector<Transaction> TransactionRepository::find_by_account_id(int account_id) {
         double amount = sqlite3_column_double(this->stmt, 0);
         string type(reinterpret_cast< char const* >(type_char));
         string datetime(reinterpret_cast< char const* >(datetime_char));
-        
+
         Transaction transaction;
         transaction.Init(amount, account_id, type, datetime);
         transactions.push_back(transaction);

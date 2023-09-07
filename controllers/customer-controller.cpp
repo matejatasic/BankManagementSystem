@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cmath>
-#include "customer-controller.h"
-#include "../errors/errors.h"
+#include "../headers/controllers/customer-controller.h"
+#include "../headers/errors/errors.h"
 
 using namespace std;
 
