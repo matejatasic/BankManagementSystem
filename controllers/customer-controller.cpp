@@ -5,6 +5,14 @@
 
 using namespace std;
 
+const string CustomerController::TEXT_ACCOUNT_DETAILS = "Account Details";
+const string CustomerController::TEXT_DEPOSIT = "Deposit Money";
+const string CustomerController::TEXT_WITHDRAW = "Withdraw Money";
+const string CustomerController::TEXT_TRANSACTION = "Transaction Details";
+const string CustomerController::TEXT_CHANGE_PIN = "Change Pin";
+const string CustomerController::TEXT_CHANGE_PERSONAL_DETAILS = "Change Personal Details";
+const string CustomerController::TEXT_EXIT = "Exit";
+
 CustomerController::CustomerController(
     shared_ptr<CustomerService> customer_service
 ) {
@@ -55,17 +63,17 @@ void CustomerController::show_menu() {
     cout << "\nMENU\n";
     cout << "---------\n";
 
-    cout << "\n" << this->CHOICE_ACCOUNT_DETAILS << ": Account Details";
-    cout << "\n" << this->CHOICE_DEPOSIT << ": Deposit Money";
-    cout << "\n" << this->CHOICE_WITHDRAW << ": Withdraw Money";
-    cout << "\n" << this->CHOICE_TRANSACTION << ": Transaction Details";
-    cout << "\n" << this->CHOICE_CHANGE_PIN << ": Change Pin";
-    cout << "\n" << this->CHOICE_CHANGE_PERSONAL_DETAILS << ": Change Personal Details";
-    cout << "\n" << this->CHOICE_EXIT << ": Exit\n";
+    cout << this->CHOICE_ACCOUNT_DETAILS << ": " << this->TEXT_ACCOUNT_DETAILS << endl;
+    cout << this->CHOICE_DEPOSIT << ": " << this->TEXT_DEPOSIT << endl;
+    cout << this->CHOICE_WITHDRAW << ": " << this->TEXT_WITHDRAW << endl;
+    cout << this->CHOICE_TRANSACTION << ": " << this->TEXT_TRANSACTION << endl;
+    cout << this->CHOICE_CHANGE_PIN << ": " << this->TEXT_CHANGE_PIN << endl;
+    cout << this->CHOICE_CHANGE_PERSONAL_DETAILS << ": " << this->TEXT_CHANGE_PERSONAL_DETAILS << endl;
+    cout << this->CHOICE_EXIT << ": " << this->TEXT_EXIT << endl;
 }
 
 void CustomerController::show_account_details() {
-    cout << "\nAcount Details\n";
+    cout << "\n" << this->TEXT_ACCOUNT_DETAILS << endl;
     cout << "--------------\n\n";
 
     string result = this->customer_service->get_account_details();
@@ -76,7 +84,7 @@ void CustomerController::show_account_details() {
 }
 
 void CustomerController::deposit_money() {
-    cout << "\nDeposit Money\n";
+    cout << "\n" << this->TEXT_DEPOSIT << endl;
     cout << "--------------\n\n";
 
     double amount = 0;
@@ -95,7 +103,7 @@ void CustomerController::deposit_money() {
 }
 
 void CustomerController::withdraw_money() {
-    cout << "\nWithdraw Money\n";
+    cout << "\n" << this->TEXT_WITHDRAW << endl;
     cout << "--------------\n\n";
 
     double amount = 0;
@@ -114,7 +122,7 @@ void CustomerController::withdraw_money() {
 }
 
 void CustomerController::show_transaction_details() {
-    cout << "\nTransaction details\n";
+    cout << "\n" << this->TEXT_TRANSACTION << endl;
     cout << "--------------\n\n";
 
     string result = this->customer_service->show_transaction_details();
@@ -125,7 +133,7 @@ void CustomerController::show_transaction_details() {
 }
 
 void CustomerController::change_pin() {
-    cout << "\nChange pin\n";
+    cout << "\n" << this->TEXT_CHANGE_PIN << endl;
     cout << "-----------\n\n";
 
     string old_pin;
@@ -146,7 +154,7 @@ void CustomerController::change_pin() {
 }
 
 void CustomerController::change_personal_details() {
-    cout << "\nChange personal details\n";
+    cout << "\n" << this->TEXT_CHANGE_PERSONAL_DETAILS << endl;
     cout << "-------------------\n\n";
 
     string name;

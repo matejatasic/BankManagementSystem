@@ -15,6 +15,19 @@ class AdminController: public BankController {
     static const int CHOICE_SHOW_ACCOUNT_TRANSACTIONS = 11;
     static const int CHOICE_EXIT = 12;
 
+    static const std::string TEXT_ALL_ACCOUNTS;
+    static const std::string TEXT_ALL_EMPLOYEES;
+    static const std::string TEXT_SHOW_ACCOUNT;
+    static const std::string TEXT_SHOW_EMPLOYEE;
+    static const std::string TEXT_CREATE_ACCOUNT;
+    static const std::string TEXT_UPDATE_ACCOUNT;
+    static const std::string TEXT_DELETE_ACCOUNT;
+    static const std::string TEXT_CREATE_EMPLOYEE;
+    static const std::string TEXT_UPDATE_EMPLOYEE;
+    static const std::string TEXT_DELETE_EMPLOYEE;
+    static const std::string TEXT_SHOW_ACCOUNT_TRANSACTIONS;
+    static const std::string TEXT_EXIT;
+
     private:
         std::shared_ptr<AdminService> admin_service;
 

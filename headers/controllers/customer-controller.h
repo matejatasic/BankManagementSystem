@@ -10,6 +10,14 @@ class CustomerController: public BankController {
     static const int CHOICE_CHANGE_PERSONAL_DETAILS = 6;
     static const int CHOICE_EXIT = 7;
 
+    static const std::string TEXT_ACCOUNT_DETAILS;
+    static const std::string TEXT_DEPOSIT;
+    static const std::string TEXT_WITHDRAW;
+    static const std::string TEXT_TRANSACTION;
+    static const std::string TEXT_CHANGE_PIN;
+    static const std::string TEXT_CHANGE_PERSONAL_DETAILS;
+    static const std::string TEXT_EXIT;
+
     private:
         std::shared_ptr<CustomerService> customer_service;
 
