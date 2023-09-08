@@ -60,8 +60,7 @@ void CustomerController::run_app() {
 }
 
 void CustomerController::show_menu() {
-    cout << "\nMENU\n";
-    cout << "---------\n";
+    this->show_header("MENU");
 
     cout << this->CHOICE_ACCOUNT_DETAILS << ": " << this->TEXT_ACCOUNT_DETAILS << endl;
     cout << this->CHOICE_DEPOSIT << ": " << this->TEXT_DEPOSIT << endl;
@@ -73,8 +72,7 @@ void CustomerController::show_menu() {
 }
 
 void CustomerController::show_account_details() {
-    cout << "\n" << this->TEXT_ACCOUNT_DETAILS << endl;
-    cout << "--------------\n\n";
+    this->show_header(this->TEXT_ACCOUNT_DETAILS);
 
     string result = this->customer_service->get_account_details();
 
@@ -84,8 +82,7 @@ void CustomerController::show_account_details() {
 }
 
 void CustomerController::deposit_money() {
-    cout << "\n" << this->TEXT_DEPOSIT << endl;
-    cout << "--------------\n\n";
+    this->show_header(this->TEXT_DEPOSIT);
 
     double amount = 0;
 
@@ -103,8 +100,7 @@ void CustomerController::deposit_money() {
 }
 
 void CustomerController::withdraw_money() {
-    cout << "\n" << this->TEXT_WITHDRAW << endl;
-    cout << "--------------\n\n";
+    this->show_header(this->TEXT_WITHDRAW);
 
     double amount = 0;
 
@@ -122,8 +118,7 @@ void CustomerController::withdraw_money() {
 }
 
 void CustomerController::show_transaction_details() {
-    cout << "\n" << this->TEXT_TRANSACTION << endl;
-    cout << "--------------\n\n";
+    this->show_header(this->TEXT_TRANSACTION);
 
     string result = this->customer_service->show_transaction_details();
 
@@ -133,8 +128,7 @@ void CustomerController::show_transaction_details() {
 }
 
 void CustomerController::change_pin() {
-    cout << "\n" << this->TEXT_CHANGE_PIN << endl;
-    cout << "-----------\n\n";
+    this->show_header(this->TEXT_CHANGE_PIN);
 
     string old_pin;
     string new_pin;
@@ -154,8 +148,7 @@ void CustomerController::change_pin() {
 }
 
 void CustomerController::change_personal_details() {
-    cout << "\n" << this->TEXT_CHANGE_PERSONAL_DETAILS << endl;
-    cout << "-------------------\n\n";
+    this->show_header(this->TEXT_CHANGE_PERSONAL_DETAILS);
 
     string name;
     string phone;
@@ -176,6 +169,10 @@ void CustomerController::change_personal_details() {
     cout << result << endl;
 
     this->show_press_enter();
+}
+
+void CustomerController::show_header(string header) {
+    BankController::show_header(header);
 }
 
 void CustomerController::show_press_enter() {

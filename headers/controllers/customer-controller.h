@@ -29,6 +29,7 @@ class CustomerController: public BankController {
         void change_pin();
         void change_personal_details();
         void show_press_enter();
+        void show_header(std::string header);
     public:
         void run_app();
         CustomerController(

@@ -78,8 +78,7 @@ void AdminController::run_app() {
 };
 
 void AdminController::show_menu() {
-    cout << "\nMENU\n";
-    cout << "---------\n";
+    this->show_header("MENU");
 
     cout << this->CHOICE_ALL_ACCOUNTS << ": " << this->TEXT_ALL_ACCOUNTS << endl;
     cout << this->CHOICE_ALL_EMPLOYEES << ": " << this->TEXT_ALL_EMPLOYEES << endl;
@@ -96,8 +95,7 @@ void AdminController::show_menu() {
 };
 
 void AdminController::show_all_accounts() {
-    cout << "\n" << this->TEXT_ALL_ACCOUNTS << endl;
-    cout << "-----------------\n\n";
+    this->show_header(this->TEXT_ALL_ACCOUNTS);
 
     vector<Account> accounts = this->admin_service->get_all_accounts();
 
@@ -124,8 +122,7 @@ void AdminController::show_all_accounts() {
 }
 
 void AdminController::show_all_employees() {
-    cout << "\n" << this->TEXT_ALL_EMPLOYEES << endl;
-    cout << "-----------------\n\n";
+    this->show_header(this->TEXT_ALL_EMPLOYEES);
 
     vector<Employee> employees = this->admin_service->get_all_employees();
 
@@ -150,8 +147,7 @@ void AdminController::show_all_employees() {
 }
 
 void AdminController::show_account_details() {
-    cout << "\n" << this->TEXT_SHOW_ACCOUNT << endl;
-    cout << "-----------------\n\n";
+    this->show_header(this->TEXT_SHOW_ACCOUNT);
 
     string name;
 
@@ -166,8 +162,7 @@ void AdminController::show_account_details() {
 }
 
 void AdminController::show_employee_details() {
-    cout << "\n" << this->TEXT_SHOW_EMPLOYEE << endl;
-    cout << "-----------------\n\n";
+    this->show_header(this->TEXT_SHOW_EMPLOYEE);
 
     string username;
 
@@ -182,8 +177,7 @@ void AdminController::show_employee_details() {
 }
 
 void AdminController::create_account() {
-    cout << "\n" << this->TEXT_CREATE_ACCOUNT << endl;
-    cout << "--------------\n\n";
+    this->show_header(this->TEXT_CREATE_ACCOUNT);
 
     string name, pin, phone, email;
 
@@ -204,8 +198,7 @@ void AdminController::create_account() {
 }
 
 void AdminController::update_account() {
-    cout << "\n" << this->TEXT_UPDATE_ACCOUNT << endl;
-    cout << "--------------\n\n";
+    this->show_header(this->TEXT_UPDATE_ACCOUNT);
 
     string owner_name;
 
@@ -250,8 +243,7 @@ void AdminController::update_account() {
 }
 
 void AdminController::delete_account() {
-    cout << "\n" << this->TEXT_DELETE_ACCOUNT << endl;
-    cout << "--------------\n\n";
+    this->show_header(this->TEXT_DELETE_ACCOUNT);
 
     string owner_name;
 
@@ -266,8 +258,7 @@ void AdminController::delete_account() {
 }
 
 void AdminController::create_employee() {
-    cout << "\n" << this->TEXT_CREATE_EMPLOYEE << endl;
-    cout << "--------------\n\n";
+    this->show_header(this->TEXT_CREATE_EMPLOYEE);
 
     string username, password, phone, position;
 
@@ -288,8 +279,7 @@ void AdminController::create_employee() {
 }
 
 void AdminController::update_employee() {
-    cout << "\n" << this->TEXT_UPDATE_EMPLOYEE << endl;
-    cout << "--------------\n\n";
+    this->show_header(this->TEXT_UPDATE_EMPLOYEE);
 
     string username;
 
@@ -328,8 +318,7 @@ void AdminController::update_employee() {
 }
 
 void AdminController::delete_employee() {
-    cout << "\n" << this->TEXT_DELETE_EMPLOYEE << endl;
-    cout << "--------------\n\n";
+    this->show_header(this->TEXT_DELETE_EMPLOYEE);
 
     string username;
 
@@ -344,8 +333,7 @@ void AdminController::delete_employee() {
 }
 
 void AdminController::show_account_transactions() {
-    cout << "\n" << this->TEXT_SHOW_ACCOUNT_TRANSACTIONS << endl;
-    cout << "--------------------------\n\n";
+    this->show_header(this->TEXT_SHOW_ACCOUNT_TRANSACTIONS);
 
     string owner_name;
 
@@ -357,6 +345,10 @@ void AdminController::show_account_transactions() {
     cout << "\n";
     cout << result << endl;
     this->show_press_enter();
+}
+
+void AdminController::show_header(string header) {
+    BankController::show_header(header);
 }
 
 void AdminController::show_press_enter() {

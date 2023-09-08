@@ -33,11 +33,6 @@ class AdminController: public BankController {
 
         void show_menu();
         void show_press_enter();
-    public:
-        void run_app();
-        AdminController(
-            std::shared_ptr<AdminService> admin_service
-        );
         void show_all_accounts();
         void show_all_employees();
         void show_account_details();
@@ -49,4 +44,10 @@ class AdminController: public BankController {
         void update_employee();
         void delete_employee();
         void show_account_transactions();
+        void show_header(std::string header);
+    public:
+        void run_app();
+        AdminController(
+            std::shared_ptr<AdminService> admin_service
+        );
 };
