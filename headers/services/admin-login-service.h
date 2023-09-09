@@ -1,3 +1,4 @@
+#pragma once
 #include <memory>
 #include "../repositories/employee-repository.h"
 #include "../models/employee-model.h"

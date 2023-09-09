@@ -1,3 +1,4 @@
+#pragma once
 #include <memory>
 #include "../repositories/account-repository.h"
 #include "../models/account-model.h"
