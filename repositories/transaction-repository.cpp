@@ -8,6 +8,10 @@ TransactionRepository::TransactionRepository() {
     int conn = sqlite3_open("bank-management-system.db", &this->db);
 }
 
+bool TransactionRepository::table_exists() {
+    return Repository::table_exists(this->table_name);
+}
+
 TransactionRepository::~TransactionRepository() {
     sqlite3_close(this->db);
 }

@@ -6,6 +6,7 @@
 
 class TransactionRepository: Repository {
     private:
+        bool table_exists();
         void prepare_query(std::string query);
         std::string const table_name = "transactions";
     public:
