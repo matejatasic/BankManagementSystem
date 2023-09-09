@@ -13,12 +13,9 @@ TransactionRepository::~TransactionRepository() {
 }
 
 void TransactionRepository::create(Transaction transaction) {
-    const string query = "INSERT INTO " + this->table_name + " (amount, account_id, type, datetime) VALUES(?, ?, ?, datetime('now'))";
-    this->result = sqlite3_prepare(this->db, query.c_str(), query.length(), &this->stmt, NULL);
-
-    if (this->result != SQLITE_OK) {
-        throw exception();
-    }
+    this->prepare_query(
+        "INSERT INTO " + this->table_name + " (amount, account_id, type, datetime) VALUES(?, ?, ?, datetime('now'))"
+    );
 
     sqlite3_bind_double(this->stmt, 1, transaction.get_amount());
     sqlite3_bind_int(this->stmt, 2, transaction.get_account_id());
@@ -33,12 +30,9 @@ void TransactionRepository::create(Transaction transaction) {
 }
 
 vector<Transaction> TransactionRepository::find_by_account_id(int account_id) {
-    const string query = "SELECT amount, type, datetime FROM " + this->table_name + " WHERE account_id=?";
-    this->result = sqlite3_prepare(this->db, query.c_str(), query.length(), &this->stmt, NULL);
-
-    if (this->result != SQLITE_OK) {
-        throw exception();
-    }
+    this->prepare_query(
+        "SELECT amount, type, datetime FROM " + this->table_name + " WHERE account_id=?"
+    );
 
     sqlite3_bind_int(this->stmt, 1, account_id);
 
@@ -60,4 +54,8 @@ vector<Transaction> TransactionRepository::find_by_account_id(int account_id) {
     sqlite3_finalize(this->stmt);
 
     return transactions;
+}
+
+void TransactionRepository::prepare_query(string query) {
+    Repository::prepare_query(query);
 }

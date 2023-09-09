@@ -3,14 +3,13 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include "./repository.h"
 #include "../models/account-model.h"
 
-class  AccountRepository {
+class  AccountRepository: Repository {
     private:
-        sqlite3 *db;
-        sqlite3_stmt* stmt;
-        int result;
         bool table_exists();
+        void prepare_query(std::string query);
         std::shared_ptr<Account> account;
         std::string const table_name = "accounts";
     public:

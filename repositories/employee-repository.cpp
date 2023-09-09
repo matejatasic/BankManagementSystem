@@ -20,13 +20,7 @@ using namespace std;
 }
 
 bool EmployeeRepository::table_exists() {
-    const char* query = "SELECT name FROM sqlite_master WHERE type='table' AND name=?";
-
-    this->result = sqlite3_prepare(this->db, query, -1, &this->stmt, NULL);
-
-    if (this->result != SQLITE_OK) {
-        throw exception();
-    }
+    this->prepare_query("SELECT name FROM sqlite_master WHERE type='table' AND name=?");
 
     sqlite3_bind_text(this->stmt, 1, this->table_name.c_str(), -1, SQLITE_TRANSIENT);
 
@@ -54,13 +48,7 @@ EmployeeRepository::~EmployeeRepository() {
 }
 
 vector<Employee> EmployeeRepository::get_all() {
-    const string query = "SELECT * FROM " + this->table_name;
-
-    this->result = sqlite3_prepare(this->db, query.c_str(), query.length(), &this->stmt, NULL);
-
-    if (this->result != SQLITE_OK) {
-        throw exception();
-    }
+    this->prepare_query("SELECT * FROM " + this->table_name);
 
     vector<Employee> employees;
 
@@ -92,13 +80,9 @@ void EmployeeRepository::create(
     string phone,
     string position
 ) {
-    const string query = "INSERT INTO " + this->table_name + " (username, password, phone, position) VALUES (?, ?, ?, ?)";
-
-    this->result = sqlite3_prepare(this->db, query.c_str(), query.length(), &this->stmt, NULL);
-
-    if (this->result != SQLITE_OK) {
-        throw exception();
-    }
+    this->prepare_query(
+        "INSERT INTO " + this->table_name + " (username, password, phone, position) VALUES (?, ?, ?, ?)"
+    );
 
     sqlite3_bind_text(this->stmt, 1, username.c_str(), username.length(), NULL);
     sqlite3_bind_text(this->stmt, 2, password.c_str(), password.length(), NULL);
@@ -120,13 +104,9 @@ void EmployeeRepository::update(
     string phone,
     string position
 ) {
-    const string query = "UPDATE " + this->table_name + " SET username=?, password=?, phone=?, position=? WHERE id=?";
-
-    this->result = sqlite3_prepare(this->db, query.c_str(), query.length(), &this->stmt, NULL);
-
-    if (this->result != SQLITE_OK) {
-        throw exception();
-    }
+    this->prepare_query(
+        "UPDATE " + this->table_name + " SET username=?, password=?, phone=?, position=? WHERE id=?"
+    );
 
     sqlite3_bind_text(this->stmt, 1, username.c_str(), username.length(), NULL);
     sqlite3_bind_text(this->stmt, 2, password.c_str(), password.length(), NULL);
@@ -143,13 +123,7 @@ void EmployeeRepository::update(
 }
 
 void EmployeeRepository::destroy(int id) {
-    const string query = "DELETE FROM " + this->table_name + " WHERE id=?";
-
-    this->result = sqlite3_prepare(this->db, query.c_str(), query.length(), &this->stmt, NULL);
-
-    if (this->result != SQLITE_OK) {
-        throw exception();
-    }
+    this->prepare_query("DELETE FROM " + this->table_name + " WHERE id=?");
 
     sqlite3_bind_int(this->stmt, 1, id);
 
@@ -162,12 +136,9 @@ void EmployeeRepository::destroy(int id) {
 }
 
 shared_ptr<Employee> EmployeeRepository::find_by_username(string username) {
-    const string query = "SELECT id, username, password, phone, position FROM " + this->table_name + " WHERE username=?";
-    this->result = sqlite3_prepare(this->db, query.c_str(), query.length(), &this->stmt, NULL);
-
-    if (this->result != SQLITE_OK) {
-        throw exception();
-    }
+    this->prepare_query(
+        "SELECT * FROM " + this->table_name + " WHERE username=?"
+    );
 
     sqlite3_bind_text(this->stmt, 1, username.c_str(), username.length(), NULL);
 
@@ -194,4 +165,8 @@ shared_ptr<Employee> EmployeeRepository::find_by_username(string username) {
     sqlite3_finalize(this->stmt);
 
     return this->employee;
+}
+
+void EmployeeRepository::prepare_query(string query) {
+    Repository::prepare_query(query);
 }

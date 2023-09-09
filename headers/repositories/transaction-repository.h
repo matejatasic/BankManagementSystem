@@ -1,13 +1,12 @@
 #pragma once
 #include <sqlite3.h>
 #include <vector>
+#include "./repository.h"
 #include "../models/transaction-model.h"
 
-class TransactionRepository {
+class TransactionRepository: Repository {
     private:
-        sqlite3 *db;
-        sqlite3_stmt* stmt;
-        int result;
+        void prepare_query(std::string query);
         std::string const table_name = "transactions";
     public:
         TransactionRepository();

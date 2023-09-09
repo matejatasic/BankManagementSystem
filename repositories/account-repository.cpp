@@ -19,13 +19,7 @@ using namespace std;
 }
 
 bool AccountRepository::table_exists() {
-    const char* query = "SELECT name FROM sqlite_master WHERE type='table' AND name=?";
-
-    this->result = sqlite3_prepare(this->db, query, -1, &this->stmt, NULL);
-
-    if (this->result != SQLITE_OK) {
-        throw exception();
-    }
+    this->prepare_query("SELECT name FROM sqlite_master WHERE type='table' AND name=?");
 
     sqlite3_bind_text(this->stmt, 1, this->table_name.c_str(), -1, SQLITE_TRANSIENT);
 
@@ -53,13 +47,7 @@ AccountRepository::~AccountRepository() {
 }
 
 vector<Account> AccountRepository::get_all() {
-    const string query = "SELECT * FROM " + this->table_name;
-
-    this->result = sqlite3_prepare(this->db, query.c_str(), query.length(), &this->stmt, NULL);
-
-    if (this->result != SQLITE_OK) {
-        throw exception();
-    }
+    this->prepare_query("SELECT * FROM " + this->table_name);
 
     vector<Account> accounts;
 
@@ -96,12 +84,9 @@ void AccountRepository::create(
     string registration_date,
     double balance
 ) {
-    const string query = "INSERT INTO accounts (owner, pin, phone, email, registration_date, balance) VALUES (?, ?, ?, ?, ?, ?)";
-    this->result = sqlite3_prepare(this->db, query.c_str(), query.length(), &this->stmt, NULL);
-
-    if (this->result != SQLITE_OK) {
-        throw exception();
-    }
+    this->prepare_query(
+        "INSERT INTO accounts (owner, pin, phone, email, registration_date, balance) VALUES (?, ?, ?, ?, ?, ?)"
+    );
 
     sqlite3_bind_text(this->stmt, 1, name.c_str(), name.length(), NULL);
     sqlite3_bind_text(this->stmt, 2, pin.c_str(), pin.length(), NULL);
@@ -120,12 +105,10 @@ void AccountRepository::create(
 }
 
 shared_ptr<Account> AccountRepository::find_by_owner(string name) {
-    const string query = "SELECT id, owner, pin, phone, email, registration_date, balance  FROM " + this->table_name + " WHERE owner=?";
-    this->result = sqlite3_prepare(this->db, query.c_str(), query.length(), &this->stmt, NULL);
-
-    if (this->result != SQLITE_OK) {
-        throw exception();
-    }
+    this->prepare_query(
+        "SELECT * FROM " + this->table_name + " WHERE owner=?"
+    );
+    cout << sqlite3_sql(this->stmt) << endl;
 
     sqlite3_bind_text(this->stmt, 1, name.c_str(), name.length(), NULL);
 
@@ -160,13 +143,10 @@ shared_ptr<Account> AccountRepository::find_by_owner(string name) {
 void AccountRepository::update_balance(double balance_change) {
     string operation = balance_change < 0 ? "" : "+";
     string balance_change_str = operation + " " + to_string(balance_change);
-    const string query = "UPDATE " + this->table_name +" SET balance = balance " + balance_change_str + " WHERE id=?";
 
-    this->result = sqlite3_prepare(this->db, query.c_str(), query.length(), &this->stmt, NULL);
-
-    if (this->result != SQLITE_OK) {
-        throw exception();
-    }
+    this->prepare_query(
+        "UPDATE " + this->table_name +" SET balance = balance " + balance_change_str + " WHERE id=?"
+    );
 
     sqlite3_bind_int(this->stmt, 1, this->account->get_id());
 
@@ -179,13 +159,9 @@ void AccountRepository::update_balance(double balance_change) {
 }
 
 void AccountRepository::update_pin(string pin) {
-    const string query = "UPDATE " + this->table_name +" SET pin=? WHERE id=?";
-
-    this->result = sqlite3_prepare(this->db, query.c_str(), query.length(), &this->stmt, NULL);
-
-    if (this->result != SQLITE_OK) {
-        throw exception();
-    }
+    this->prepare_query(
+        "UPDATE " + this->table_name +" SET pin=? WHERE id=?"
+    );
 
     sqlite3_bind_text(this->stmt, 1, pin.c_str(), pin.length(), NULL);
     sqlite3_bind_int(this->stmt, 2, this->account->get_id());
@@ -203,13 +179,9 @@ void AccountRepository::update_personal_details(
     string phone,
     string email
 ) {
-    const string query = "UPDATE " + this->table_name +" SET owner=?, phone=?, email=? WHERE id=?";
-
-    this->result = sqlite3_prepare(this->db, query.c_str(), query.length(), &this->stmt, NULL);
-
-    if (this->result != SQLITE_OK) {
-        throw exception();
-    }
+    this->prepare_query(
+        "UPDATE " + this->table_name +" SET owner=?, phone=?, email=? WHERE id=?"
+    );
 
     sqlite3_bind_text(this->stmt, 1, owner.c_str(), owner.length(), NULL);
     sqlite3_bind_text(this->stmt, 2, phone.c_str(), phone.length(), NULL);
@@ -231,13 +203,9 @@ void AccountRepository::update(
     string phone,
     string email
 ) {
-    const string query = "UPDATE " + this->table_name +" SET owner=?, pin=?, phone=?, email=? WHERE id=?";
-
-    this->result = sqlite3_prepare(this->db, query.c_str(), query.length(), &this->stmt, NULL);
-
-    if (this->result != SQLITE_OK) {
-        throw exception();
-    }
+    this->prepare_query(
+        "UPDATE " + this->table_name +" SET owner=?, pin=?, phone=?, email=? WHERE id=?"
+    );
 
     sqlite3_bind_text(this->stmt, 1, owner.c_str(), owner.length(), NULL);
     sqlite3_bind_text(this->stmt, 2, pin.c_str(), pin.length(), NULL);
@@ -254,13 +222,7 @@ void AccountRepository::update(
 }
 
 void AccountRepository::destroy(int id) {
-    const string query = "DELETE FROM " + this->table_name +" WHERE id=?";
-
-    this->result = sqlite3_prepare(this->db, query.c_str(), query.length(), &this->stmt, NULL);
-
-    if (this->result != SQLITE_OK) {
-        throw exception();
-    }
+    this->prepare_query("DELETE FROM " + this->table_name +" WHERE id=?");
 
     sqlite3_bind_int(this->stmt, 1, id);
 
@@ -270,4 +232,8 @@ void AccountRepository::destroy(int id) {
     if (this->result != SQLITE_DONE) {
         throw DeleteException();
     }
+}
+
+void AccountRepository::prepare_query(string query) {
+    Repository::prepare_query(query);
 }

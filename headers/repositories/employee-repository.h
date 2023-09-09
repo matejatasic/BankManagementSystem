@@ -3,14 +3,13 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include "./repository.h"
 #include "../models/employee-model.h"
 
-class  EmployeeRepository {
+class  EmployeeRepository: Repository {
     private:
-        sqlite3 *db;
-        sqlite3_stmt* stmt;
-        int result;
         bool table_exists();
+        void prepare_query(std::string query);
         std::shared_ptr<Employee> employee;
         std::string const table_name = "employees";
     public:

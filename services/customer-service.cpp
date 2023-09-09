@@ -20,9 +20,6 @@ CustomerService::CustomerService(
 }
 
 string CustomerService::get_account_details() {
-    cout << "\nAcount Details\n";
-    cout << "--------------\n\n";
-
     return "Name: " + this->account->get_owner() + "\n"
     + "Pin: " + this->account->get_pin() + "\n"
     + "Phone: " + this->account->get_phone() + "\n"
