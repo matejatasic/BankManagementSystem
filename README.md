@@ -25,10 +25,11 @@ This is the final project for the CS50's Introduction to Computer Science course
 
 # Usage
 1. Download the project
-2. In the project folder run `make`
-3. After that run the executable using the `./bank-management-system` command
-
-**Note:** you will have to create the tables(using the SQL queries from the _bank-management-system.sql_ file) and populate the tables with the needed data for this app to work. You can also use the queries that are in this file for this.
+2. Install the needed packages by running `sudo apt-get install sqlite3 libsqlite3-dev`
+3. In the project folder run `make`
+4. Enter sqlite shell by running `sqlite3 bank-management-system.db`
+5. Paste the SQL commands from bank-management-system.sql, hit Enter and then hit `CTRL + D` to exit
+6. After that run the executable using the `./bank-management-system` command
 
 ## About CS50
 CS50 is a openware course from Havard University and taught by David J. Malan
