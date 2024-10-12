@@ -88,7 +88,6 @@ shared_ptr<Account> AccountRepository::find_by_owner(string name) {
     this->prepare_query(
         "SELECT * FROM " + this->table_name + " WHERE owner=?"
     );
-    cout << sqlite3_sql(this->stmt) << endl;
 
     sqlite3_bind_text(this->stmt, 1, name.c_str(), name.length(), NULL);
 
